@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 export const StyledLoginButton = styled.button`
     width: 65px !important;
     height: 30px !important;
+    margin-left: 10px;
     background-color: white;
     border: none;
     border-radius: 8px;
