@@ -1,0 +1,68 @@
+components:
+  schemas:
+    Analytic:
+      type: object
+      required:
+        - latitude
+        - date
+        - longitude
+        - usage
+        - date
+      description: Base model for the purpose of collecting anonymous analytics from a user
+      properties:
+        latitude:
+          type: number
+          example: 51.644532
+        longitude: 
+          type: number
+          example: -121.297732
+        usage:
+          type: object
+          required:
+            - search
+            - function
+          properties:
+            search:
+              type: string
+              example: "Kamloops"
+            function:
+              type: string
+              example: "find location"
+            closestOffice:
+              type: object
+              required:
+                - serviceType
+                - locality
+              properties:
+                serviceType:
+                  type: string
+                  example: ServiceBC
+                locality:
+                  type: string
+                  example: Victoria
+            serviceType:
+              type: string
+              example: ServiceBC
+            settings:
+              type: object
+              required:
+                - settingType
+              properties:
+                valueStr:
+                  type: string
+                  example: French
+                valueBool:
+                  type: boolean
+                  example: true
+                settingType:
+                  type: string
+                  example: language
+        newUser:
+          type: boolean
+          example: true
+        appLaunch:
+          type: boolean
+          example: false
+        date:
+          type: number
+          example: 1685987761167

@@ -1,0 +1,65 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "react-app",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:cypress/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.svg"],
+      "parserOptions": {
+        "project": ["./src/frontend-pwa/tsconfig.json"]
+      },
+      "rules": {
+        "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+        "react/react-in-jsx-scope": "off",
+        "import/no-unresolved": "off",
+        "import/no-absolute-path": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.js", "*.svg"],
+      "rules": {
+        "no-unresolved-imports": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./src/frontend-pwa/tsconfig.json"
+},
+  "plugins": ["@typescript-eslint", "react", "prettier", "@emotion"],
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "svg": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".svg"]
+      }
+    }
+  },
+  "ignorePatterns": ["cypress.config.ts"]
+}
