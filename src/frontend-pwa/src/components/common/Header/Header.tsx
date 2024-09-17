@@ -3,8 +3,9 @@
  * @author Dallas Richmond, LocalNewsTV
  */
 import logo from '/logo-banner.svg';
-import { BackNavButton, SettingsNavButton } from '../../appNav';
+import { BackNavButton, SettingsNavButton, LoginButton } from '../../appNav';
 import { Link } from 'react-router-dom';
+import { useSSO } from '@bcgov/citz-imb-sso-react';
 
 import {
   HeaderWrapper,
@@ -17,6 +18,9 @@ import {
 } from './header.styles';
 
 export default function Header() {
+  const { isAuthenticated } = useSSO();
+  console.log('isAuthenticated', isAuthenticated);
+
   return (
     <HeaderWrapper>
       <BannerLeft>
@@ -35,6 +39,7 @@ export default function Header() {
           <SettingsNavButton />
         </Link>
       </BannerRight>
+      <LoginButton />
     </HeaderWrapper>
   );
 }
