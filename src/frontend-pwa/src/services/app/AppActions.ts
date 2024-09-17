@@ -1,0 +1,14 @@
+/* eslint-disable no-shadow */
+enum AppActionType {
+  SET_APP_DATA = 'SET_APP_DATA',
+  SET_LOADING = 'SET_LOADING',
+  SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION',
+  SET_EULA = 'SET_EULA',
+  SET_SETTINGS = 'SET_SETTINGS',
+  SET_REPORTS = 'SET_REPORTS',
+  SET_TOOL_TIP_TEXT = 'SET_TOOL_TIP_TEXT',
+  SET_ONLINE = 'SET_ONLINE',
+  SET_MAP_CACHED = 'SET_MAP_CACHED',
+}
+
+export default AppActionType;
