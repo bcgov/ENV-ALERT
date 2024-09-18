@@ -23,24 +23,29 @@ import {
   TileLayer,
   Marker,
   Popup,
+  LayersControl,
+  useMapEvents,
+  useMap,
 } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
 import baseIconImage from '/marker-icon.png';
 import baseIconImageMobile from '/marker-icon-2x.png';
 import redIconImage from '/marker-icon-red.png';
 import redIconImageMobile from '/marker-icon-2x-red.png';
+import { WMSTileLayer } from 'react-leaflet/WMSTileLayer'
 import {
   MapWrapperDiv,
   StyledPopup,
   StyledMapContainer,
-  PopupInfo,
-  MapTilesNotFoundDiv,
+  PopupInfo
 } from './mapping.styles';
 import SingleLocation from '../../../Type/SingleLocation';
 import LocationsArray from '../../../Type/LocationsArray';
 import { Button } from '../../common';
 import { mappingContent } from '../../../content/content';
 import useAppService from '../../../services/app/useAppService';
+import { useEffect, useState } from 'react';
+import FeatureResponse from '../../../Type/FeatureResponse';
 
 type CurrentLocationType = {
   lat: string;
@@ -68,64 +73,116 @@ const redIcon = Leaflet.icon({
   iconSize: [25, 45],
 });
 
+
+function checkWaterbody(event: Leaflet.LeafletMouseEvent){
+  const bbox = event.sourceTarget.getBounds().toBBoxString();
+  const width = event.sourceTarget.getSize().x;
+  const height = event.sourceTarget.getSize().y;
+  const x = Math.floor(event.sourceTarget.layerPointToContainerPoint(event.layerPoint).x);
+  const y = Math.floor(event.sourceTarget.layerPointToContainerPoint(event.layerPoint).y);
+
+  const wmsGetInfoUrl = `https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&query_layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&bbox=${bbox}&feature_count=1&height=${height}&width=${width}&info_format=application%2Fjson&srs=EPSG%3A4326&x=${x}&y=${y}`;
+
+  fetch(wmsGetInfoUrl)
+  .then(async response => {
+    const data = await response.json() as FeatureResponse;
+    if (data && data['features'] && data['features'].length === 1) {
+      console.log(data.features[0].properties.GNIS_NAME_1);
+    };
+  });
+}
+
+function LocationMarker() {
+  const [position, setPosition] = useState<any>(null)
+  const map = useMapEvents({
+    click: (ex) => {
+      checkWaterbody(ex);
+      setPosition(ex.latlng)
+    }
+  })
+
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  )
+}
+
 export default function Mapping({ locations, currentLocation }: MappingProps) {
   const { state } = useAppService();
   const { lang } = state.settings;
   const lat = parseFloat(currentLocation?.lat);
   const long = parseFloat(currentLocation?.long);
 
-  /**
-   * const "onlineMode" renders true only if:
-    - the application's offline mode box is not checked.
-    - the application's online state is determined to be true.
-   */
-  const onlineMode = state.isOnline && !state.settings.offline_mode;
-  const zoomLevel = onlineMode ? 12 : 7;
-  const minZoomLevel = onlineMode ? 1 : 6;
-  const maxZoomLevel = onlineMode ? 17 : 9;
-  const tileLayerUrl = onlineMode
-    ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    : '/mapTiles/{z}/{x}/{y}.png';
+  const zoomLevel = 12;
+  const minZoomLevel = 1;
+  const maxZoomLevel = 20;
+  const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
-  if (!onlineMode && !state.mapsCached) {
-    return (
-      <MapTilesNotFoundDiv>
-        <p>
-          {mappingContent.offlineMapTilesNotFoundMessage[lang]}
-        </p>
-      </MapTilesNotFoundDiv>
-    );
-  }
+  const [map, setMap] = useState<Leaflet.Map | null>(null);
 
+  useEffect(() => {
+    if(map){
+      map.setView([lat,long],zoomLevel);
+    }
+  }, [currentLocation])
+  
   return (
     <MapWrapperDiv>
-      { !isNaN(lat)
-      && (
       <MapWrapperDiv>
         <StyledMapContainer
-          center={[lat, long]}
+          center={ isNaN(lat)? [53.7267, -127.6476 ] : [lat, long]}
           zoom={zoomLevel}
           minZoom={minZoomLevel}
           maxZoom={maxZoomLevel}
           scrollWheelZoom
+          ref={setMap}
         >
+          <LocationMarker></LocationMarker>
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url={tileLayerUrl}
-          />
-          <Marker icon={redIcon} position={[lat, long]}>
-            <Popup>
-              <h3>{mappingContent.currLocation[lang]}</h3>
-              <p>
-                {mappingContent.currLat[lang]}
-                {currentLocation.lat}
-              </p>
-              <p>
-                {mappingContent.currLong[lang]}
-                {currentLocation.long}
-              </p>
-            </Popup>
-          </Marker>
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url={tileLayerUrl}
+                detectRetina={true}
+              />
+          <LayersControl position="topright">
+            <LayersControl.Overlay name='Municipalities'>
+              <WMSTileLayer
+                attribution=''
+                layers= 'WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP'
+                format= 'image/png'
+                detectRetina={true}
+                transparent= {true}
+                url='https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/ows'
+              />
+            </LayersControl.Overlay>
+            <LayersControl.Overlay checked name='Water bodies'>
+              <WMSTileLayer
+                attribution=''
+                detectRetina={true}
+                layers= 'WHSE_BASEMAPPING.FWA_LAKES_POLY'
+                format= 'image/png'
+                transparent= {true}
+                url='https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows'/>
+            </LayersControl.Overlay>
+          </LayersControl>
+
+          {!isNaN(lat)
+          && (
+              <Marker icon={redIcon} position={[lat, long]}>
+                <Popup>
+                  <h3>{mappingContent.currLocation[lang]}</h3>
+                  <p>
+                    {mappingContent.currLat[lang]}
+                    {currentLocation.lat}
+                  </p>
+                  <p>
+                    {mappingContent.currLong[lang]}
+                    {currentLocation.long}
+                  </p>
+                </Popup>
+              </Marker>
+          )}
+
           {locations.map((item: SingleLocation, index: number) => (
             // eslint-disable-next-line react/no-array-index-key
             <Marker icon={baseIcon} key={index} position={[item.latitude, item.longitude]}>
@@ -157,7 +214,6 @@ export default function Mapping({ locations, currentLocation }: MappingProps) {
           ))}
         </StyledMapContainer>
       </MapWrapperDiv>
-      )}
     </MapWrapperDiv>
   );
 }
