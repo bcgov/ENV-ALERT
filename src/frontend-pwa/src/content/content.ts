@@ -354,6 +354,10 @@ export const reportContent: ContentMap = {
     eng: 'Event details:',
     fr: 'Détails de l\'événement :',
   },
+  locationLabel: {
+    eng: 'Location:',
+    fr: 'Emplacement:',
+  },
   dateRangeLabel: {
     eng: 'Date Range:',
     fr: 'Plage de dates:',
