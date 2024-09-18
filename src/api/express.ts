@@ -42,6 +42,7 @@ app.use('/api', [
   routers.reportRouter,
   routers.analyticRouter,
   routers.accountRouter,
+  routers.advisoryRouter,
 ]);
 
 // Integrate global error handler after routes to cover all ends.

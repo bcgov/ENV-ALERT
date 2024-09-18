@@ -1,0 +1,33 @@
+components:
+  schemas:
+    Report:
+      type: object
+      required:
+        - latitude
+        - longitude
+        - details
+        - submissionTime
+        - expirationTime
+        - eventType
+      description: An Advisory submission
+      properties:
+        latitude:
+          type: number
+          example: 51.644532
+        longitude:
+          type: number
+          example: -121.297732
+        submissionTime:
+          type: number
+          example: 1234567890
+        eventType:
+          type: string
+          example: APITest
+          minimum: 4
+          maximum: 52
+          pattern: '/^[a-zA-Z\s]+$/i'
+        details:
+          type: string
+          example: Blue-Green algae warning at Langford Lake
+          minimum: 0
+          maximum: 256

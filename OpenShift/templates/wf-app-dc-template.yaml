@@ -82,7 +82,7 @@ parameters:
   - description: Application Name
     displayName: Application Name
     name: APPLICATION_NAME
-    value: wf-api
+    value: sus-api
     required: true
   - description: Image Repository
     displayName: Image Repository
@@ -92,4 +92,3 @@ parameters:
     displayName: Artifactory URL
     name: ARTIFACTORY_URL
     required: true
-

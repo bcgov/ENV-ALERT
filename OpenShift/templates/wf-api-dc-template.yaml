@@ -82,7 +82,7 @@ objects:
               - name: API_PORT
                 value: '3000'
               - name: API_HOSTNAME
-                value: wf-api
+                value: sus-api
             ports:
               - containerPort: 3000
                 protocol: TCP
@@ -106,7 +106,7 @@ parameters:
   - description: Application Name
     displayName: Application Name
     name: APPLICATION_NAME
-    value: wf-api
+    value: sus-api
     required: true
   - description: Image Repository
     displayName: Image Repository

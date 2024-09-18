@@ -3,18 +3,18 @@ services:
   #############################################################################################
   ###                                         API                                           ###
   #############################################################################################
-  wf-api:
-    container_name: wf-api 
+  sus-api:
+    container_name: sus-api 
     build:
       context: ./src/api
       dockerfile: Dockerfile
     environment:
       - API_PORT=${API_PORT:-3000}
       - API_HOSTNAME=${API_HOSTNAME:-localhost}
-      - MONGO_USERNAME=${MONGO_USERNAME:-wf-admin}
-      - MONGO_PASSWORD=${MONGO_PASSWORD:-wf-admin}
+      - MONGO_USERNAME=${MONGO_USERNAME:-sus-admin}
+      - MONGO_PASSWORD=${MONGO_PASSWORD:-sys-admin}
       - MONGO_PORT=${MONGO_PORT:-27017}
-      - MONGO_DATABASE=${MONGO_DATABASE:-wf-db}
+      - MONGO_DATABASE=${MONGO_DATABASE:-sus-db}
       - MONGO_SERVICE=${MONGO_SERVICE:-mongodb}
       - CONTAINERIZED=true
       - SCRAPER_API_KEY=${SCRAPER_API_KEY:-devKey}
@@ -25,11 +25,11 @@ services:
       - SSO_CLIENT_SECRET=${SSO_CLIENT_SECRET}
       - SSO_REDIRECT_URI=${SSO_REDIRECT_URI}
     networks:
-      - wf-network
+      - sus-network
     ports:
       - ${PORT:-3000}:3000
     healthcheck:
-      test: curl localhost:${PORT:-3000}/api/health | grep 'Project Wayfinder API is healthy and ready'
+      test: curl localhost:${PORT:-3000}/api/health | grep 'Project CHADvisory API is healthy and ready'
       interval: 20s
       timeout: 30s
       retries: 5
@@ -41,13 +41,13 @@ services:
   #############################################################################################
   ###                                       Frontend                                        ###
   #############################################################################################
-  wf-app:
-    container_name: wf-app
+  sus-app:
+    container_name: sus-app
     build:
       context: ./src/frontend-pwa
       dockerfile: Dockerfile
     networks:
-      - wf-network
+      - sus-network
     ports: 
       - "5173:5173"
     healthcheck:
@@ -57,7 +57,7 @@ services:
       retries: 5
       start_period: 20s
     depends_on:
-      wf-api:
+      sus-api:
         condition: service_healthy
 
   #############################################################################################
@@ -71,13 +71,13 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_DATABASE_NAME=${MONGO_DATABASE:-wf-db}
+      - MONGO_DATABASE_NAME=${MONGO_DATABASE:-sus-db}
     volumes:
       - ./src/mongoSeed/init:/docker-entrypoint-initdb.d
     ports:
       - ${MONGO_PORT:-27017}:${MONGO_PORT:-27017}
     networks:
-      - wf-network
+      - sus-network
     healthcheck:
       test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u ${MONGO_USERNAME} -p ${MONGO_PASSWORD} --quiet | grep 1
       interval: 20s
@@ -90,5 +90,5 @@ services:
 #############################################################################################
 
 networks:
-  wf-network:
+  sus-network:
     driver: "bridge"
