@@ -21,6 +21,7 @@ const {
   SET_TOOL_TIP_TEXT,
   SET_ONLINE,
   SET_MAP_CACHED,
+  SET_AUTHENTICATED,
 } = AppActionType;
 
 /**
@@ -77,6 +78,14 @@ const useAppService = () => {
           errorHighAccuracy,
           { maximumAge: 600000, timeout: 5000, enableHighAccuracy: true },
         );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const setAuthentication = async (isAuthenticated: boolean) => {
+      try {
+        dispatch({ type: SET_AUTHENTICATED, payload: isAuthenticated });
       } catch (error) {
         console.log(error);
       }
@@ -315,6 +324,7 @@ const useAppService = () => {
       setOnline,
       setAppInstall,
       setMapsCache,
+      setAuthentication,
       state,
     };
   }, [state, dispatch]);

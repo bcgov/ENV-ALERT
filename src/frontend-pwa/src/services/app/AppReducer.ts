@@ -10,6 +10,7 @@ const {
   SET_TOOL_TIP_TEXT,
   SET_ONLINE,
   SET_MAP_CACHED,
+  SET_AUTHENTICATED,
 } = AppActionType;
 
 export type AppAction = {
@@ -28,6 +29,7 @@ export const initialState = {
   toolTipText: '',
   isOnline: false,
   mapsCached: true,
+  isAunthenicated: false,
 };
 
 /**
@@ -57,6 +59,8 @@ export const reducer = (state: object, action: AppAction): object => {
       return { ...state, isOnline: action.payload };
     case SET_MAP_CACHED:
       return { ...state, mapsCached: action.payload };
+    case SET_AUTHENTICATED:
+      return { ...state, isAuthenticated: action.payload };
     default:
       throw new Error();
   }
