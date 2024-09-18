@@ -1,4 +1,5 @@
 type SingleLocation = {
+  distance: string;
   contact?: {
     fax?: string;
     phone?: string;
