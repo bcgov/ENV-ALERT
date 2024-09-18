@@ -24,14 +24,6 @@ export default function Home() {
         <Greeting />
         <ButtonWrapper>
           <NavButton
-            path="/location"
-            text={homeContent.findOffice[lang]}
-            icon={location}
-            hex="#C8E1F8"
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <NavButton
             path="/services"
             text={homeContent.findService[lang]}
             icon={services}

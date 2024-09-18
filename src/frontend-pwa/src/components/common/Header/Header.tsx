@@ -27,7 +27,7 @@ export default function Header() {
           <Image src={logo} alt="Go to the Home page" />
         </Link>
         <StyledLink href="/">
-          <Heading>Wayfinder</Heading>
+          <Heading>CHAdvisory</Heading>
         </StyledLink>
       </Banner>
       <BannerRight>

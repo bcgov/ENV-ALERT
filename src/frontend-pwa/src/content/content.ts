@@ -271,17 +271,13 @@ export const greetingContent: ContentMap = {
 };
 
 export const homeContent: ContentMap = {
-  findOffice: {
-    eng: 'Find an office',
-    fr: 'Trouver un bureau',
-  },
   findService: {
-    eng: 'Find a service',
-    fr: 'Trouver un service',
+    eng: 'See all advisories',
+    fr: 'Voir tous les avis',
   },
   report: {
-    eng: 'Report an event',
-    fr: 'Signaler un événement',
+    eng: 'Report an advisory',
+    fr: 'Signaler un avis',
   },
 };
 
@@ -358,6 +354,14 @@ export const reportContent: ContentMap = {
     eng: 'Event details:',
     fr: 'Détails de l\'événement :',
   },
+  dateRangeLabel: {
+    eng: 'Date Range:',
+    fr: 'Plage de dates:',
+  },
+  dateLabel: {
+    eng: 'Date:',
+    fr: 'Date:',
+  },
   eventTypeLabel: {
     eng: 'Event type:',
     fr: 'Type d\'événement:',
@@ -380,16 +384,14 @@ export const reportContent: ContentMap = {
   },
   reportOptions: {
     eng: [
-      'Damaged Infrastructure',
       'Animal Sighting',
-      'Suggestion/Complaint',
-      'Miscellaneous',
+      'Water Advisory',
+      'Swimming Advisory',
     ],
     fr: [
-      'Infrastructure endommagée',
       'Observation d\'animaux',
-      'Suggestion/plainte',
-      'Divers',
+      'Avis de l\'eau',
+      'Avis de natation',
     ],
   },
   submit: {
