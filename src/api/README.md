@@ -21,7 +21,7 @@ Create a `.env` in the /api directory. Populate the document with each keys spec
 | API_PORT | 3000 | Designated port for API listener  | 
 | API_HOSTNAME | http://... | Designated Host for API |
 | MONGO_PORT | 27017 | Designated port for mongo |
-| MONGO_USERNAME | wf-admin | Username for mongo user |
-| MONGO_PASSWORD | wf-admin | Password for mongo user |
-| MONGO_DATABASE | wf-db | Name for mongo database |
+| MONGO_USERNAME | sus-admin | Username for mongo user |
+| MONGO_PASSWORD | sus-admin | Password for mongo user |
+| MONGO_DATABASE | sus-db | Name for mongo database |
 | MONGO_SERVICE | localhost | service location of db |

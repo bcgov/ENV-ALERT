@@ -3,6 +3,7 @@
  * @author  LocalNewsTV
  */
 import './db';
+import { sso } from '@bcgov/citz-imb-sso-express';
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -15,6 +16,8 @@ import * as routers from './routes';
 import * as middleware from './middleware';
 
 const app: Application = express();
+
+sso(app);
 
 // Express middleware
 app.use(morgan('tiny'));
@@ -39,6 +42,7 @@ app.use('/api', [
   routers.reportRouter,
   routers.analyticRouter,
   routers.accountRouter,
+  routers.advisoryRouter,
 ]);
 
 // Integrate global error handler after routes to cover all ends.
