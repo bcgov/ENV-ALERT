@@ -94,8 +94,8 @@ export default function Report() {
 
   const handleDateChange = (range: [Date | null, Date | null]) => {
     const [start, end] = range;
-    setSubmissionTime(start ? start : '');
-    setExpirationTime(end ? end : '');
+    setSubmissionTime(start || '');
+    setExpirationTime(end || '');
   };
 
   const clearFields = () => {
@@ -182,7 +182,7 @@ export default function Report() {
                     <StyledP>{reportContent.dateLabel[lang]}</StyledP>
                     <DatePicker
                       selected={submissionTime ? new Date(submissionTime) : null}
-                      onChange={(date) => setSubmissionTime(date)}
+                      onChange={(date) => setSubmissionTime(date || '')}
                       dateFormat="yyyy/MM/dd"
                       minDate={new Date()} // Optional: Set minimum date
                       inline
@@ -197,8 +197,8 @@ export default function Report() {
                       selected={submissionTime ? new Date(submissionTime) : null}
                       onChange={handleDateChange}
                       selectsRange
-                      startDate={submissionTime ? new Date(submissionTime) : null}
-                      endDate={expirationTime ? new Date(expirationTime) : null}
+                      startDate={submissionTime ? new Date(submissionTime) : undefined}
+                      endDate={expirationTime ? new Date(expirationTime) : undefined}
                       dateFormat="yyyy/MM/dd"
                       inline
                     />
