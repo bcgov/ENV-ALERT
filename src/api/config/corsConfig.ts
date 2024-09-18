@@ -1,6 +1,5 @@
 /**
  * @summary CORS Configuration for Express API
- * @author  LocalNewsTV
  */
 const corsConfig = {
   origin: [
