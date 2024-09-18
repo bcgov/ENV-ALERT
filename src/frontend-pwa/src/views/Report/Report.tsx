@@ -7,6 +7,8 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from '../../components/common';
 import {
   StyledReportContainer,
@@ -35,7 +37,8 @@ export default function Report() {
   const minCharLimit = 10;
   const [eventType, setEventType] = useState('');
   const [details, setDetails] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [submissionTime, setSubmissionTime] = useState<Date | ''>('');
+  const [expirationTime, setExpirationTime] = useState<Date | ''>('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [reportSending, setReportSending] = useState(false);
@@ -51,20 +54,7 @@ export default function Report() {
   const geolocationKnown = localStorageKeyExists(constants.CURRENT_LOCATION_KEY);
   const latitude = state.currentLocation ? state.currentLocation.lat : 49.2827;
   const longitude = state.currentLocation ? state.currentLocation.long : -123.2;
-
-  /**
-   * @desc - Validates the phone number (if inputted) against regex pattern.
-   * @returns {boolean} Valid phone number format, or blank.
-   */
-  const validatePhoneNumber = useCallback((): boolean => {
-    const regex = /^(?:\+?1-?)?(?:\(\d{3}\)|\d{3})-?\d{3}-?\d{4}$/gi;
-    if (!phoneNumber || phoneNumber.match(regex)) {
-      setErrorMessage('');
-      return true;
-    }
-    setErrorMessage(reportContent.invalidPhone[lang]);
-    return false;
-  }, [phoneNumber, lang]);
+  const [startDate, setStartDate] = useState(null);
 
   /**
    * @desc - Validates the detail input is longer than the minumum length, or not present.
@@ -88,9 +78,9 @@ export default function Report() {
    */
   const checkFormValidity = useCallback(() => {
     const isEventTypeValid = !!eventType;
-    const isValid = isEventTypeValid && validateDetailBox() && validatePhoneNumber();
+    const isValid = isEventTypeValid && validateDetailBox();
     return isValid;
-  }, [eventType, validateDetailBox, validatePhoneNumber]);
+  }, [eventType, validateDetailBox]);
 
   const handleEventTypeChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setEventType(e.target.value);
@@ -102,15 +92,18 @@ export default function Report() {
     }
   };
 
-  const handlePhoneNumberChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setPhoneNumber(e.target.value);
+  const handleDateChange = (range: [Date | null, Date | null]) => {
+    const [start, end] = range;
+    setSubmissionTime(start || '');
+    setExpirationTime(end || '');
   };
 
   const clearFields = () => {
     setErrorMessage('');
+    setSubmissionTime('');
+    setExpirationTime('');
     setEventType('');
     setDetails('');
-    setPhoneNumber('');
   };
 
   /**
@@ -124,9 +117,10 @@ export default function Report() {
     const formData = {
       latitude,
       longitude,
+      submissionTime,
+      expirationTime,
       eventType,
       details,
-      phoneNumber,
       time: currentTime,
     };
 
@@ -140,39 +134,6 @@ export default function Report() {
           function: 'report',
         },
       };
-
-      if (state.settings.offline_mode) {
-        setAnalytics(false, analytics);
-      } else {
-        OnlineCheck()
-          .then((Online) => {
-            setAnalytics(Online, analytics);
-          });
-      }
-    }
-
-    if (state.settings.offline_mode) {
-      setOfflineReports(formData);
-      setErrorMessage(reportContent.reportNetworkFailure[lang]);
-      setReportSending(true);
-    } else {
-      await axios.post(`${constants.BACKEND_URL}/api/report`, formData)
-        .then((res) => {
-          setReportSentSuccess(true);
-          setSuccessfulReports(res.data);
-          setTicketNum(res.data.ticketNum);
-          setReportSending(true);
-        })
-        .catch((err) => {
-          setReportSentSuccess(false);
-          if (err.code === 'ERR_NETWORK') {
-            setOfflineReports(formData);
-            setErrorMessage(reportContent.reportNetworkFailure[lang]);
-            setReportSending(true);
-          } else {
-            setErrorMessage(reportContent.reportFailure[lang]);
-          }
-        });
     }
     setReportSending(false);
   };
@@ -215,6 +176,39 @@ export default function Report() {
           </Section>
           <Section>
             <StyledTextAreaWrapper>
+              {eventType === 'Animal Sighting' ? (
+                <Section>
+                  <StyledTextAreaWrapper>
+                    <StyledP>{reportContent.dateLabel[lang]}</StyledP>
+                    <DatePicker
+                      selected={submissionTime ? new Date(submissionTime) : null}
+                      onChange={(date) => setSubmissionTime(date || '')}
+                      dateFormat="yyyy/MM/dd"
+                      minDate={new Date()} // Optional: Set minimum date
+                      inline
+                    />
+                  </StyledTextAreaWrapper>
+                </Section>
+              ) : (
+                <Section>
+                  <StyledTextAreaWrapper>
+                    <StyledP>{reportContent.dateRangeLabel[lang]}</StyledP>
+                    <DatePicker
+                      selected={submissionTime ? new Date(submissionTime) : null}
+                      onChange={handleDateChange}
+                      selectsRange
+                      startDate={submissionTime ? new Date(submissionTime) : undefined}
+                      endDate={expirationTime ? new Date(expirationTime) : undefined}
+                      dateFormat="yyyy/MM/dd"
+                      inline
+                    />
+                  </StyledTextAreaWrapper>
+                </Section>
+              )}
+            </StyledTextAreaWrapper>
+          </Section>
+          <Section>
+            <StyledTextAreaWrapper>
               <StyledP>{reportContent.detailsLabel[lang]}</StyledP>
               <StyledTextArea
                 id="details"
@@ -230,29 +224,12 @@ export default function Report() {
               <StyledCharacterCounter>{`${details.length} / ${charLimit}`}</StyledCharacterCounter>
             </StyledTextAreaWrapper>
           </Section>
-          <Section>
-            <StyledP>{reportContent.phoneLabel[lang]}</StyledP>
-            <StyledInput
-              type="text"
-              aria-label="phone field"
-              id="phoneNumber"
-              value={phoneNumber}
-              onBlur={validatePhoneNumber}
-              onChange={handlePhoneNumberChange}
-            />
-
-            {reportSentSuccess
-              ? (
-                <SuccessP>{`${reportContent.reportSentSuccess[lang]}: #${ticketNum}`}</SuccessP>
-              )
-              : (<ErrorP>{errorMessage}</ErrorP>)}
-          </Section>
           <ButtonSection>
             <Button
               text={reportContent.submit[lang]}
               variant="primary"
               size="md"
-              disabled={!reportSending && !isFormValid}
+              disabled={!isFormValid}
             />
           </ButtonSection>
         </StyledReportContainer>

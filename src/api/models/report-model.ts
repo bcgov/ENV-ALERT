@@ -15,7 +15,11 @@ const ReportSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  time: {
+  submissionTime: {
+    type: Date,
+    required: true,
+  },
+  expirationTime: {
     type: Date,
     required: true,
   },
@@ -25,7 +29,7 @@ const ReportSchema = new mongoose.Schema({
     minLength: 4,
     maxLength: 32,
     trim: true,
-    match: /^(Damaged Infrastructure|Animal Sighting|Suggestion\/Complaint|Miscellaneous|APITest)$/i,
+    match: /^(Animal Sighting|Water Advisory|Swimming Advisory|APITest)$/i,
   },
   details: {
     type: String,
@@ -33,13 +37,6 @@ const ReportSchema = new mongoose.Schema({
     minLength: 10,
     maxLength: 256,
     trim: true,
-  },
-  phone: {
-    required: false,
-    type: String,
-    minLength: 10,
-    maxLength: 16,
-    match: /^(?:\+?1-?)?(?:\(\d{3}\)|\d{3})-?\d{3}-?\d{4}$/gi,
   },
 });
 

@@ -38,7 +38,7 @@ function ReportHistoryListItem({
   return (
     <TableRow>
       <TableData onClick={handleClick}>
-        {new Date(time.toString()).toDateString()}
+        {time ? new Date(time.toString()).toDateString() : 'N/A'}
       </TableData>
       <TableData onClick={handleClick}>
         {eventType}

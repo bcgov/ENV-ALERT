@@ -6,6 +6,8 @@ type Report = {
   latitude: Number;
   longitude: Number;
   time: Date;
+  submissionTime: Date;
+  expirationTime: Date;
   eventType: String;
   details: String
   phone?: String
