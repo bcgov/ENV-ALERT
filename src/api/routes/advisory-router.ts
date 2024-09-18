@@ -3,7 +3,7 @@ import { getAdvisories, submitAdvisory } from '../controllers/advisory-controlle
 
 const router = express.Router();
 
-router.route('/report')
+router.route('/advisories')
   .get(getAdvisories)
   .post(submitAdvisory);
 
