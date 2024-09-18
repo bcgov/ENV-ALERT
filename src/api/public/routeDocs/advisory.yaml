@@ -1,0 +1,59 @@
+paths:
+  /advisory:
+    post:
+      tags:
+        - Advisory
+      summary: Submit an advisory
+      description: Submit a swimming or drinking water advisory, or report an animal sighting.
+      requestBody:
+        description: Advisary submission
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Advisory'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  latitude:
+                    type: number
+                    example: 51.644532
+                  longitude:
+                    type: number
+                    example: -121.297732
+                  submissionTime:
+                    type: date
+                    example: 
+                  expirationTime:
+                    type: date
+                    example:
+                  advisoryType:
+                    type: string
+                    example: APITest
+                    minimum: 4
+                    maximum: 52
+                    pattern: ''
+                  details:
+                    type: string
+                    example: Blue-Green algae unsafe levels at Langford Lake
+                    minimum: 10
+                    maximum: 256
+                  advisoryId:
+                    type: string
+                    example: 
+        '400':
+          description: Invalid Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  phone:
+                    type: string
+                    example: "."
+                    
