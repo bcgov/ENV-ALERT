@@ -3,7 +3,7 @@
  * @author Dallas Richmond, LocalNewsTV
  */
 import logo from '/logo-banner.svg';
-import { BackNavButton, SettingsNavButton } from '../../appNav';
+import { BackNavButton, SettingsNavButton, LoginButton } from '../../appNav';
 import { Link } from 'react-router-dom';
 
 import {
@@ -34,6 +34,7 @@ export default function Header() {
         <Link to="/settings">
           <SettingsNavButton />
         </Link>
+        <LoginButton />
       </BannerRight>
     </HeaderWrapper>
   );

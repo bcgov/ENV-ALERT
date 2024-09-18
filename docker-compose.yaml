@@ -19,6 +19,11 @@ services:
       - CONTAINERIZED=true
       - SCRAPER_API_KEY=${SCRAPER_API_KEY:-devKey}
       - ADMIN_KEY=${ADMIN_KEY:-devKey}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:3000}
+      - SSO_CLIENT_ID=${SSO_CLIENT_ID}
+      - SSO_CLIENT_SECRET=${SSO_CLIENT_SECRET}
+      - SSO_REDIRECT_URI=${SSO_REDIRECT_URI}
     networks:
       - wf-network
     ports:
