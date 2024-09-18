@@ -11,6 +11,7 @@ const constants = {
   APP_INSTALL_KEY: 'appInstalled',
   MAPS_CACHED_KEY: 'mapsCached',
   UPDATE_ARRAY_KEY: 'updateArr',
+  IS_AUTHENTICATED_KEY: 'isAuthenticated',
 };
 
 export default constants;
