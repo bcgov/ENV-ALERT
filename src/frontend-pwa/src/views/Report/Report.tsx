@@ -113,10 +113,6 @@ export default function Report() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-  const handleSubmissionTimeChange = (date: Date | null) => {
-      setSubmissionTime(date); // date can be Date or null
-  };
-
     const currentTime = new Date();
     const formData = {
       latitude,
@@ -138,15 +134,6 @@ export default function Report() {
           function: 'report',
         },
       };
-
-      if (state.settings.offline_mode) {
-        setAnalytics(false, analytics);
-      } else {
-        OnlineCheck()
-          .then((Online) => {
-            setAnalytics(Online, analytics);
-          });
-      }
     }
     setReportSending(false);
   };
@@ -195,7 +182,7 @@ export default function Report() {
                     <StyledP>{reportContent.dateLabel[lang]}</StyledP>
                     <DatePicker
                       selected={submissionTime ? new Date(submissionTime) : null}
-                      onChange={date => setSubmissionTime(date)}
+                      onChange={(date) => setSubmissionTime(date)}
                       dateFormat="yyyy/MM/dd"
                       minDate={new Date()} // Optional: Set minimum date
                       inline
@@ -242,7 +229,7 @@ export default function Report() {
               text={reportContent.submit[lang]}
               variant="primary"
               size="md"
-              disabled={!reportSending && !isFormValid}
+              disabled={!isFormValid}
             />
           </ButtonSection>
         </StyledReportContainer>
