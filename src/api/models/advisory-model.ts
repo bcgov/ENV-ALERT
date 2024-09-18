@@ -23,7 +23,7 @@ const AdvisorySchema = new mongoose.Schema({
     minLength: 4,
     maxLength: 32,
     trim: true,
-    match: /^(Animal Sighting|Swimming Advisory|Drinking Water Advisory|Miscellaneous|APITest)$/i,
+    match: /^(Animal Sighting|Swimming|Drinking Water|Miscellaneous|APITest)$/i,
   },
   details: {
     type: String,

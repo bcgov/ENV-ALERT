@@ -31,7 +31,7 @@ db.advisories.insertMany([
     longitude: -123.4863211,
     submissionTime: "31/08/2024",
     expirationTime: "14/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Water is of high turbidity (clarity) and should be boiled before consumption"
   },
   {
@@ -55,7 +55,7 @@ db.advisories.insertMany([
     longitude: -123.3210171,
     submissionTime: "30/08/2024",
     expirationTime: "13/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Salmonella microbes have been detected in water supply"
   },
   {
@@ -79,7 +79,7 @@ db.advisories.insertMany([
     longitude: -122.9631776,
     submissionTime: "01/09/2024",
     expirationTime: "15/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "High traces of Hepatitis A found in water source"
   },
   {
@@ -103,7 +103,7 @@ db.advisories.insertMany([
     longitude: -123.1092398,
     submissionTime: "11/09/2024",
     expirationTime: "25/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "High traces of norovirus detected in water supply"
   },
   {
@@ -127,7 +127,7 @@ db.advisories.insertMany([
     longitude: -122.5532464,
     submissionTime: "09/09/2024",
     expirationTime: "23/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Water is purple, we don't know why, boil it I guess"
   },
   {
@@ -151,7 +151,7 @@ db.advisories.insertMany([
     longitude: -121.9726603,
     submissionTime: "09/09/2024",
     expirationTime: "23/09/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "700 barrels of wine has crashed into water supply, contaminating local drinking water"
   },
   {
@@ -175,7 +175,7 @@ db.advisories.insertMany([
     longitude: -123.0802036,
     submissionTime: "15/09/2024",
     expirationTime: "01/10/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Lead from concrete pipes seeping into water, boiling won't help, use bottled water for consumption."
   },
   {
@@ -199,7 +199,7 @@ db.advisories.insertMany([
     longitude: -123.7012425,
     submissionTime: "06/06/2024",
     expirationTime: "20/06/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Kool-Aid Man has taken over nearby reservoir, the water is red but it's fine to drink. Oh Yeah!"
   },
   {
@@ -223,7 +223,7 @@ db.advisories.insertMany([
     longitude: -123.9321392,
     submissionTime: "31/08/2024",
     expirationTime: "14/08/2024",
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Tea bags have been prepped in the mugs. Don't forget to add honey!"
   },
   {
