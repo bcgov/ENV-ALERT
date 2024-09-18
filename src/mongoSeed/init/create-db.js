@@ -197,8 +197,8 @@ db.advisories.insertMany([
   {
     latitude: 48.55408406,
     longitude: -123.7012425,
-    submissionTime: "06/09/2024",
-    expirationTime: "20/09/2024",
+    submissionTime: "06/06/2024",
+    expirationTime: "20/06/2024",
     eventType: "Boil Water",
     details: "Kool-Aid Man has taken over nearby reservoir, the water is red but it's fine to drink. Oh Yeah!"
   },
@@ -213,8 +213,8 @@ db.advisories.insertMany([
   {
     latitude: 48.51344607,
     longitude: -123.4414593,
-    submissionTime: "17/09/2024",
-    expirationTime: "01/10/2024",
+    submissionTime: "13/01/2024",
+    expirationTime: "18/01/2024",
     eventType: "Swimming",
     details: "Lake is Frozen, No Diving!"
   },
