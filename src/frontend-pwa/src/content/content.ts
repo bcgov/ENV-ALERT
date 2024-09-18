@@ -247,12 +247,8 @@ export const greetingContent: ContentMap = {
   eng: [
     'Welcome, what are you looking to do?',
     'Let\'s get started',
-    'What are you looking for today?',
-    'Connecting citizens to services',
-    'Are you looking to report an event?',
     'We hope you are having a good day',
     'Let\'s connect you with the services you need',
-    'We are so happy you are here',
     'Jump in and find what you need',
     'How can we help you?',
   ],
@@ -276,8 +272,8 @@ export const homeContent: ContentMap = {
     fr: 'Voir tous les avis',
   },
   report: {
-    eng: 'Report an advisory',
-    fr: 'Signaler un avis',
+    eng: 'Submit an Advisory',
+    fr: 'Soumettre un avis',
   },
 };
 
@@ -366,6 +362,10 @@ export const reportContent: ContentMap = {
     eng: 'Date:',
     fr: 'Date:',
   },
+  locationLabel: {
+    eng: 'Location:',
+    fr: 'Emplacement:',
+  },
   eventTypeLabel: {
     eng: 'Event type:',
     fr: 'Type d\'événement:',
@@ -375,8 +375,8 @@ export const reportContent: ContentMap = {
     fr: 'Sélectionnez un type d\'événement',
   },
   reportLabel: {
-    eng: 'Report an Event',
-    fr: 'Signaler un événement',
+    eng: 'Submit an Advisory',
+    fr: 'Soumettre un avis',
   },
   minLengthValidationFailure: {
     eng: 'Minimum message length is 10 characters.',
@@ -389,7 +389,7 @@ export const reportContent: ContentMap = {
   reportOptions: {
     eng: [
       'Animal Sighting',
-      'Water Advisory',
+      'Drinking Water Advisory',
       'Swimming Advisory',
     ],
     fr: [

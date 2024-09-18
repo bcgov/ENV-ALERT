@@ -70,11 +70,11 @@ describe('View walkthrough', () => {
     cy.url().should('include', '/services');
   });
 
-  it('Report an Event', () => {
+  it('Submit an Advisory', () => {
     cy.visit('/');
     cy.get('input').check();
     cy.get('button').contains('Submit').click();
-    cy.contains('Report an event').click();
+    cy.contains('Submit an Advisory').click();
     cy.url().should('include', '/report');
     cy.get('#eventType').select('Animal Sighting');
     cy.get('#details').click();

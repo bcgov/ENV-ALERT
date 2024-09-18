@@ -55,6 +55,7 @@ type CurrentLocationType = {
 type MappingProps = {
   locations: LocationsArray;
   currentLocation: CurrentLocationType;
+  onClick?: ((latLng: Leaflet.LatLng) => void);
 }
 
 const baseIcon = Leaflet.icon({
@@ -74,7 +75,7 @@ const redIcon = Leaflet.icon({
 });
 
 
-function checkWaterbody(event: Leaflet.LeafletMouseEvent){
+function checkWaterbody(event: Leaflet.LeafletMouseEvent) {
   const bbox = event.sourceTarget.getBounds().toBBoxString();
   const width = event.sourceTarget.getSize().x;
   const height = event.sourceTarget.getSize().y;
@@ -84,45 +85,57 @@ function checkWaterbody(event: Leaflet.LeafletMouseEvent){
   const wmsGetInfoUrl = `https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&query_layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&bbox=${bbox}&feature_count=1&height=${height}&width=${width}&info_format=application%2Fjson&srs=EPSG%3A4326&x=${x}&y=${y}`;
 
   fetch(wmsGetInfoUrl)
-  .then(async response => {
-    const data = await response.json() as FeatureResponse;
-    if (data && data['features'] && data['features'].length === 1) {
-      console.log(data.features[0].properties.GNIS_NAME_1);
-    };
-  });
+    .then(async response => {
+      const data = await response.json() as FeatureResponse;
+      if (data && data['features'] && data['features'].length === 1) {
+        console.log(data.features[0].properties.GNIS_NAME_1);
+      };
+    });
 }
-
-function LocationMarker() {
-  const [position, setPosition] = useState<any>(null)
+type testprops = {
+  onClick?: ((latLng: Leaflet.LatLng) => void);
+}
+LocationMarker.defaultProps = {
+  onClick: undefined,
+};
+export function LocationMarker({ onClick } : testprops) {
+  const [position, setPosition] = useState<any>(null);
   const map = useMapEvents({
     click: (ex) => {
       checkWaterbody(ex);
-      setPosition(ex.latlng)
-    }
-  })
+      setPosition(ex.latlng);
+      if (onClick !== undefined) {
+        onClick(ex.latlng);
+      }
+    },
+  });
 
   return position === null ? null : (
     <Marker position={position}>
       <Popup>You are here</Popup>
     </Marker>
-  )
-}
+  );
+} 
 
-export default function Mapping({ locations, currentLocation }: MappingProps) {
+Mapping.defaultProps = {
+  onClick: undefined,
+};
+
+export default function Mapping({ locations, currentLocation, onClick }: MappingProps) {
   const { state } = useAppService();
   const { lang } = state.settings;
   const lat = parseFloat(currentLocation?.lat);
   const long = parseFloat(currentLocation?.long);
 
   const zoomLevel = 12;
-  const minZoomLevel = 1;
-  const maxZoomLevel = 20;
+  const minZoomLevel = 11;
+  const maxZoomLevel = 17;
   const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
 
   useEffect(() => {
-    if(map){
+    if (map){
       map.setView([lat,long],zoomLevel);
     }
   }, [currentLocation])
@@ -131,14 +144,14 @@ export default function Mapping({ locations, currentLocation }: MappingProps) {
     <MapWrapperDiv>
       <MapWrapperDiv>
         <StyledMapContainer
-          center={ isNaN(lat)? [53.7267, -127.6476 ] : [lat, long]}
+          center={isNaN(lat) ? [53.7267, -127.6476] : [lat, long]}
           zoom={zoomLevel}
           minZoom={minZoomLevel}
           maxZoom={maxZoomLevel}
           scrollWheelZoom
           ref={setMap}
         >
-          <LocationMarker></LocationMarker>
+          <LocationMarker onClick={onClick} />
           <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url={tileLayerUrl}

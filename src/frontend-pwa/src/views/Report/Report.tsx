@@ -29,8 +29,9 @@ import {
 import constants from '../../constants/Constants';
 import useAppService from '../../services/app/useAppService';
 import { localStorageKeyExists } from '../../utils/AppLocalStorage';
-import OnlineCheck from '../../utils/OnlineCheck';
 import { reportContent } from '../../content/content';
+import { Mapping } from '../../components/utility';
+import { LatLng } from 'leaflet';
 
 export default function Report() {
   const charLimit = 256;
@@ -52,9 +53,8 @@ export default function Report() {
   } = useAppService();
   const { lang } = state.settings;
   const geolocationKnown = localStorageKeyExists(constants.CURRENT_LOCATION_KEY);
-  const latitude = state.currentLocation ? state.currentLocation.lat : 49.2827;
-  const longitude = state.currentLocation ? state.currentLocation.long : -123.2;
-  const [startDate, setStartDate] = useState(null);
+  const [lat, setLat] = useState(parseFloat(state.currentLocation?.lat) || 49.2827);
+  const [lng, setLng] = useState(parseFloat(state.currentLocation?.long) || 49.2827);
 
   /**
    * @desc - Validates the detail input is longer than the minumum length, or not present.
@@ -78,9 +78,9 @@ export default function Report() {
    */
   const checkFormValidity = useCallback(() => {
     const isEventTypeValid = !!eventType;
-    const isValid = isEventTypeValid && validateDetailBox();
+    const isValid = isEventTypeValid && submissionTime && validateDetailBox();
     return isValid;
-  }, [eventType, validateDetailBox]);
+  }, [eventType, submissionTime, validateDetailBox]);
 
   const handleEventTypeChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setEventType(e.target.value);
@@ -98,6 +98,23 @@ export default function Report() {
     setExpirationTime(end || '');
   };
 
+  const updateLocation = (loc: LatLng) => {
+    console.log(loc);
+  };
+
+  const handleGPSLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLat(latitude);
+          setLng(longitude);
+        },
+      );
+    }
+    console.log(lat);
+  };
+
   const clearFields = () => {
     setErrorMessage('');
     setSubmissionTime('');
@@ -112,11 +129,12 @@ export default function Report() {
    */
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
+    console.log(handleSubmit);
+    checkFormValidity();
     const currentTime = new Date();
     const formData = {
-      latitude,
-      longitude,
+      lat,
+      lng,
       submissionTime,
       expirationTime,
       eventType,
@@ -124,12 +142,14 @@ export default function Report() {
       time: currentTime,
     };
 
+    console.log('successful submit');
+
     clearFields();
 
     if (state.settings.analytics_opt_in && geolocationKnown) {
       const analytics = {
-        latitude,
-        longitude,
+        lat,
+        lng,
         usage: {
           function: 'report',
         },
@@ -138,12 +158,12 @@ export default function Report() {
     setReportSending(false);
   };
 
-  useEffect(() => {
-    setIsFormValid(checkFormValidity());
-  }, [checkFormValidity]);
+  // useEffect(() => {
+  //   setIsFormValid(checkFormValidity());
+  // }, [checkFormValidity]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <StyledReportOuterDiv>
         <StyledReportContainer>
           <HeaderContainer>
@@ -173,6 +193,22 @@ export default function Report() {
                 </option>
               ))}
             </StyledSelect>
+          </Section>
+          <Section>
+            <StyledP>{reportContent.locationLabel[lang]}</StyledP>
+            <Button
+              type="button"
+              id="gpsLocation"
+              aria-label="Get GPS Location"
+              onClick={handleGPSLocation}
+              text="Use My Location"
+              disabled={false}
+            />
+            <Mapping
+              locations={[]}
+              currentLocation={state.currentLocation}
+              onClick={updateLocation}
+            />
           </Section>
           <Section>
             <StyledTextAreaWrapper>
@@ -226,10 +262,12 @@ export default function Report() {
           </Section>
           <ButtonSection>
             <Button
+              type="submit"
               text={reportContent.submit[lang]}
               variant="primary"
               size="md"
-              disabled={!isFormValid}
+              disabled={false}
+              onSubmit={handleSubmit}
             />
           </ButtonSection>
         </StyledReportContainer>
