@@ -28,10 +28,7 @@ import {
   useMap,
 } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
-import baseIconImage from '/marker-icon.png';
-import baseIconImageMobile from '/marker-icon-2x.png';
-import redIconImage from '/marker-icon-red.png';
-import redIconImageMobile from '/marker-icon-2x-red.png';
+
 import { WMSTileLayer } from 'react-leaflet/WMSTileLayer'
 import {
   MapWrapperDiv,
@@ -46,6 +43,7 @@ import { mappingContent } from '../../../content/content';
 import useAppService from '../../../services/app/useAppService';
 import { useEffect, useState } from 'react';
 import FeatureResponse from '../../../Type/FeatureResponse';
+import { Icons } from './Icons';
 
 type CurrentLocationType = {
   lat: string;
@@ -56,23 +54,6 @@ type MappingProps = {
   locations: LocationsArray;
   currentLocation: CurrentLocationType;
 }
-
-const baseIcon = Leaflet.icon({
-  iconUrl: baseIconImage,
-  iconRetinaUrl: baseIconImageMobile,
-  iconAnchor: [5, 55],
-  popupAnchor: [10, -44],
-  iconSize: [25, 45],
-});
-
-const redIcon = Leaflet.icon({
-  iconUrl: redIconImage,
-  iconRetinaUrl: redIconImageMobile,
-  iconAnchor: [5, 55],
-  popupAnchor: [10, -44],
-  iconSize: [25, 45],
-});
-
 
 function checkWaterbody(event: Leaflet.LeafletMouseEvent){
   const bbox = event.sourceTarget.getBounds().toBBoxString();
@@ -168,7 +149,7 @@ export default function Mapping({ locations, currentLocation }: MappingProps) {
 
           {!isNaN(lat)
           && (
-              <Marker icon={redIcon} position={[lat, long]}>
+              <Marker icon={Icons.redIcon} position={[lat, long]}>
                 <Popup>
                   <h3>{mappingContent.currLocation[lang]}</h3>
                   <p>
@@ -185,7 +166,7 @@ export default function Mapping({ locations, currentLocation }: MappingProps) {
 
           {locations.map((item: SingleLocation, index: number) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Marker icon={baseIcon} key={index} position={[item.latitude, item.longitude]}>
+            <Marker icon={Icons.baseIcon} key={index} position={[item.latitude, item.longitude]}>
               <StyledPopup>
                 <h3>{item.locale}</h3>
                 <PopupInfo>
