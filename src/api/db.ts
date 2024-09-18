@@ -12,6 +12,7 @@ import './models/analytic-model';
 import './models/report-model';
 import './models/userAccount-model';
 import './models/update-model';
+import './models/advisory-model';
 
 dotenv.config();
 mongoose.set('strictQuery', true);
