@@ -30,7 +30,7 @@ export default function Home() {
               <ButtonWrapper>
                 <NavButton
                   path="/location"
-                  text={homeContent.findOffice[lang]}
+                  text={homeContent.findService[lang]}
                   icon={location}
                   hex="#C8E1F8"
                 />
