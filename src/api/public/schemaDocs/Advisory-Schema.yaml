@@ -18,7 +18,10 @@ components:
           type: number
           example: -121.297732
         submissionTime:
-          type: number
+          type: string
+          example: 1234567890
+        expirationTime:
+          type: string
           example: 1234567890
         eventType:
           type: string
