@@ -21,7 +21,7 @@ export type ButtonProps = {
   size: ButtonSizes,
   disabled: boolean;
   text: string;
-  type?: string
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export function Button({
@@ -48,5 +48,5 @@ export function Button({
 
 Button.defaultProps = {
   handleClick: () => {}, // Provide a default empty function
-  type: 'button'
+  type: 'button',
 };
