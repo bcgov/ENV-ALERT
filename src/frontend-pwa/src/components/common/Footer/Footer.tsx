@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { SmallNavButton } from '../../appNav';
 import { FooterWrapper, Container } from './footer.styles';
 import office from '/iconography/FindOfficeWhite.svg';
-import service from '/iconography/FindServiceWhite.svg';
 import report from '/iconography/ReportWhite.svg';
 import home from '/iconography/HomeWhite.svg';
 import { footerContent } from '../../../content/content';
@@ -27,14 +26,9 @@ export default function Footer() {
           icon={home}
         />
         <SmallNavButton
-          path="/location"
+          path="/advisories"
           text={footerContent.offices[lang]}
           icon={office}
-        />
-        <SmallNavButton
-          path="/services"
-          text={footerContent.services[lang]}
-          icon={service}
         />
         <SmallNavButton
           path="/report"
