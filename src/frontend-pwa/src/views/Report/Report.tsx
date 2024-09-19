@@ -200,6 +200,7 @@ export default function Report() {
                 locations={[]}
                 currentLocation={state.currentLocation}
                 onClick={updateLocation}
+                mode='picker'
               />
             </StyledMap>
             <Button
