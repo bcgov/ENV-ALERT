@@ -209,7 +209,7 @@ export default function Report() {
             <StyledP>{reportContent.locationLabel[lang]}  ({lat.toFixed(4)},{lng.toFixed(4)})</StyledP>
             <StyledMap>
               <Mapping
-                locations={[]}
+                advisories={[]}
                 currentLocation={state.currentLocation}
                 onClick={updateLocation}
                 mode='picker'
