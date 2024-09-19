@@ -31,7 +31,7 @@ db.advisories.insertMany([
     longitude: -123.4863211,
     submissionTime: new Date(2024, 7, 31, 8, 17, 46),
     expirationTime: new Date(2024, 8, 14, 19, 12, 51),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details:
       "Water is of high turbidity (clarity) and should be boiled before consumption",
   },
@@ -56,7 +56,7 @@ db.advisories.insertMany([
     longitude: -123.3210171,
     submissionTime: new Date(2024, 7, 30, 12, 38, 12),
     expirationTime: new Date(2024, 8, 13, 6, 14, 23),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Salmonella microbes have been detected in water supply",
   },
   {
@@ -81,7 +81,7 @@ db.advisories.insertMany([
     longitude: -122.9631776,
     submissionTime: new Date(2024, 8, 1, 16, 10, 59),
     expirationTime: new Date(2024, 8, 15, 12, 18, 36),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "High traces of Hepatitis A found in water source",
   },
   {
@@ -107,7 +107,7 @@ db.advisories.insertMany([
     longitude: -123.1092398,
     submissionTime: new Date(2024, 8, 11, 14, 7, 29),
     expirationTime: new Date(2024, 8, 25, 9, 12, 54),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "High traces of norovirus detected in water supply"
   },
   {
@@ -131,7 +131,7 @@ db.advisories.insertMany([
     longitude: -122.5532464,
     submissionTime: new Date(2024, 8, 9, 10, 42, 18),
     expirationTime: new Date(2024, 8, 23, 19, 34, 51),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Water is purple, we don't know why, boil it I guess"
   },
   {
@@ -155,7 +155,7 @@ db.advisories.insertMany([
     longitude: -121.9726603,
     submissionTime: new Date(2024, 8, 9, 5, 12, 27),
     expirationTime: new Date(2024, 8, 23, 12, 32, 45),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "700 barrels of wine has crashed into water supply, contaminating local drinking water"
   },
   {
@@ -179,7 +179,7 @@ db.advisories.insertMany([
     longitude: -123.0802036,
     submissionTime: new Date(2024, 8, 15, 13, 4, 19),
     expirationTime: new Date(2024, 9, 1, 10, 56, 43),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Lead from concrete pipes seeping into water, boiling won't help, use bottled water for consumption."
   },
   {
@@ -203,7 +203,7 @@ db.advisories.insertMany([
     longitude: -123.7012425,
     submissionTime: new Date(2024, 8, 6, 14, 18, 11),
     expirationTime: new Date(2024, 8, 20, 9, 34, 52),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Kool-Aid Man has taken over nearby reservoir, the water is red but it's fine to drink. Oh Yeah!"
   },
   {
@@ -227,7 +227,7 @@ db.advisories.insertMany([
     longitude: -123.9321392,
     submissionTime: new Date(2024, 7, 31, 11, 12, 7),
     expirationTime: new Date(2024, 7, 14, 13, 24, 18),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Tea bags have been prepped in the mugs. Don't forget to add honey!"
   },
   {
@@ -251,7 +251,7 @@ db.advisories.insertMany([
     longitude: -122.2948407,
     submissionTime: new Date(2024, 8, 5, 13, 34, 41),
     expirationTime: new Date(2024, 8, 19, 14, 7, 59),
-    eventType: "Boil Water",
+    eventType: "Drinking Water",
     details: "Water smells bad, but after boiling, it's okay and not smelly."
   }
 ]);
