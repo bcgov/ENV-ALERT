@@ -27,6 +27,7 @@ import {
   ContentContainer,
   ViewContainer,
   ServiceListContainer,
+  StyledMapContainer,
 } from './location.styles';
 
 interface LocationWithDistance extends SingleLocation {
@@ -110,10 +111,12 @@ export default function Location() {
   return (
     <ViewContainer>
       <ContentContainer>
-        <Mapping
-          locations={filteredLocationSearch}
-          currentLocation={state.currentLocation}
-        />
+        <StyledMapContainer>
+          <Mapping
+            locations={filteredLocationSearch}
+            currentLocation={state.currentLocation}
+          />
+        </StyledMapContainer>
         <ServiceListContainer>
           <SearchBar
             query={searchQuery}

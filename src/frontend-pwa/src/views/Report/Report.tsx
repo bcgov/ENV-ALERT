@@ -5,7 +5,7 @@
  * @author  TylerMaloney, Dallas Richmond
  */
 import { NavLink } from 'react-router-dom';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, FormEvent } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -25,6 +25,7 @@ import {
   SuccessP,
   HeaderContainer,
   StyledHeaderTwo,
+  StyledMap,
 } from './report.styles';
 import constants from '../../constants/Constants';
 import useAppService from '../../services/app/useAppService';
@@ -99,7 +100,8 @@ export default function Report() {
   };
 
   const updateLocation = (loc: LatLng) => {
-    console.log(loc);
+    setLat(loc.lat);
+    setLng(loc.lng);
   };
 
   const handleGPSLocation = () => {
@@ -112,7 +114,6 @@ export default function Report() {
         },
       );
     }
-    console.log(lat);
   };
 
   const clearFields = () => {
@@ -127,43 +128,41 @@ export default function Report() {
    * @desc - Sends a "formData" object to the /report endpoint.
    *       - Form validity is determined externally through the useEffect below.
    */
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(handleSubmit);
-    checkFormValidity();
-    const currentTime = new Date();
-    const formData = {
-      lat,
-      lng,
-      submissionTime,
-      expirationTime,
-      eventType,
-      details,
-      time: currentTime,
-    };
-
-    console.log('successful submit');
-
-    clearFields();
-
-    if (state.settings.analytics_opt_in && geolocationKnown) {
-      const analytics = {
+    if(checkFormValidity()){
+      const currentTime = new Date();
+      const formData = {
         lat,
         lng,
-        usage: {
-          function: 'report',
-        },
+        submissionTime,
+        expirationTime,
+        eventType,
+        details,
+        time: currentTime,
       };
+
+      await axios.post(`${constants.BACKEND_URL}/api/report`, formData)
+        .then((res) => {
+          setReportSentSuccess(true);
+          setSuccessfulReports(res.data);
+          setTicketNum(res.data.ticketNum);
+          setReportSending(true);
+
+          console.log('successful submit');
+          clearFields();
+        })
+        .catch((err) => {
+          setReportSentSuccess(false);
+          if (err.code === 'ERR_NETWORK') {
+            setErrorMessage(reportContent.reportNetworkFailure[lang]);
+          }
+        });
     }
-    setReportSending(false);
   };
 
-  // useEffect(() => {
-  //   setIsFormValid(checkFormValidity());
-  // }, [checkFormValidity]);
-
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <StyledReportOuterDiv>
         <StyledReportContainer>
           <HeaderContainer>
@@ -195,19 +194,24 @@ export default function Report() {
             </StyledSelect>
           </Section>
           <Section>
-            <StyledP>{reportContent.locationLabel[lang]}</StyledP>
+            <StyledP>{reportContent.locationLabel[lang]}  ({lat.toFixed(4)},{lng.toFixed(4)})</StyledP>
+            <StyledMap>
+              <Mapping
+                locations={[]}
+                currentLocation={state.currentLocation}
+                onClick={updateLocation}
+                mode='picker'
+              />
+            </StyledMap>
             <Button
               type="button"
               id="gpsLocation"
               aria-label="Get GPS Location"
-              onClick={handleGPSLocation}
+              handleClick={handleGPSLocation}
               text="Use My Location"
               disabled={false}
-            />
-            <Mapping
-              locations={[]}
-              currentLocation={state.currentLocation}
-              onClick={updateLocation}
+              size='md'
+              variant='primary'
             />
           </Section>
           <Section>
@@ -262,12 +266,11 @@ export default function Report() {
           </Section>
           <ButtonSection>
             <Button
-              type="submit"
               text={reportContent.submit[lang]}
               variant="primary"
               size="md"
               disabled={false}
-              onSubmit={handleSubmit}
+              type='submit'
             />
           </ButtonSection>
         </StyledReportContainer>
