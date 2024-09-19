@@ -16,7 +16,6 @@
  *
  * @author  Tyler Maloney, LocalNewsTV
  */
-import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/images/marker-shadow.png';
 import {
@@ -27,9 +26,6 @@ import * as Leaflet from 'leaflet';
 import { WMSTileLayer } from 'react-leaflet/WMSTileLayer';
 import { useEffect, useState } from 'react';
 import { StyledPopup, PopupInfo, MapWrapperContainer } from './mapping.styles';
-import SingleLocation from '../../../Type/SingleLocation';
-import LocationsArray from '../../../Type/LocationsArray';
-import { Button } from '../../common';
 import { mappingContent } from '../../../content/content';
 import useAppService from '../../../services/app/useAppService';
 import FeatureResponse from '../../../Type/FeatureResponse';
@@ -112,7 +108,7 @@ Mapping.defaultProps = {
   mode: 'viewer',
 };
 
-function getIconFromType ( type: string) {
+function getIconFromType(type: string) {
   switch (type) {
     case 'Animal Sighting':
       return Icons.animalSightingIcon;
@@ -179,7 +175,7 @@ export default function Mapping({
             layers="WHSE_BASEMAPPING.FWA_LAKES_POLY"
             format="image/png"
             transparent
-            //minNativeZoom={12}
+            // minNativeZoom={12}
             url="https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows"
           />
         </LayersControl.Overlay>
@@ -187,17 +183,16 @@ export default function Mapping({
 
       {advisories.map((item: Advisory, index: number) => (
         // eslint-disable-next-line react/no-array-index-key, max-len
-        <Marker icon={getIconFromType(item.eventType)} key={index} position={[item.latitude, item.longitude]}>
+        <Marker
+          icon={getIconFromType(item.eventType)}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          position={[item.latitude, item.longitude]}
+        >
           <StyledPopup>
             <h3>{item.eventType}</h3>
-            <PopupInfo>
-              {item.details}
-            </PopupInfo>
-            { item.expirationTime &&
-              <PopupInfo>
-                {item.expirationTime.toString()}
-              </PopupInfo>
-            }
+            <PopupInfo>{item.details}</PopupInfo>
+            {item.expirationTime && <PopupInfo>{item.expirationTime.toString()}</PopupInfo>}
           </StyledPopup>
         </Marker>
       ))}
@@ -225,7 +220,6 @@ export default function Mapping({
           </Popup>
         </Marker>
       )}
-
     </MapWrapperContainer>
   );
 }

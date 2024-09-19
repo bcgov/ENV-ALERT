@@ -282,13 +282,11 @@ export const locationContent: ContentMap = {
     eng: [
       'Advisory Type',
       'Details',
-      'Submission Time',
       'Distance',
     ],
     fr: [
       'Type de conseil',
       'Détails',
-      'Heure de soumission',
       'Distance',
     ],
   },
