@@ -34,7 +34,8 @@ export default function AdvisoryView() {
   const [searchQuery, setSearchQuery] = useState('');
   const { service } = useParams();
   const geolocationKnown = localStorageKeyExists(constants.CURRENT_LOCATION_KEY);
-  const advisories = state.appData?.data ? state.appData.data || [] : [];
+  // const advisories = state.appData?.data ? state.appData.data || [] : [];
+  const advisories = Array.isArray(state.appData?.data) ? state.appData.data : [];
   const locationRange = state.settings.location_range;
 
   const headers: Array<string> = [];
@@ -53,7 +54,7 @@ export default function AdvisoryView() {
         currentLocation: state.currentLocation,
       });
       if (parseFloat(locationDistance) <= locationRange) {
-        return true; // location.locale.toLowerCase().includes(searchQuery.toLowerCase().trim());
+        return true;
       }
     }
     return false;
