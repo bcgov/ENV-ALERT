@@ -21,8 +21,9 @@ import constants from '../../constants/Constants';
 import { locationContent } from '../../content/content';
 import { localStorageKeyExists } from '../../utils/AppLocalStorage';
 
-import { ContentContainer, ViewContainer, ServiceListContainer } from './advisory.styles';
+import { ContentContainer, ViewContainer, ServiceListContainer, StyledMapContainer } from './advisory.styles';
 import Advisory from '../../Type/Advisory';
+import { Mapping } from '../../components/utility';
 
 interface AdvisoryWithDistance extends Advisory {
   distance: string;
@@ -89,6 +90,9 @@ export default function AdvisoryView() {
   return (
     <ViewContainer>
       <ContentContainer>
+        <StyledMapContainer>
+          <Mapping advisories={filteredAdvisorySearch} currentLocation={state.currentLocation} />
+        </StyledMapContainer>
         <ServiceListContainer>
           <SearchBar
             query={searchQuery}

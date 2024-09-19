@@ -161,7 +161,7 @@ const useAppService = () => {
         );
       } else {
         const settings = {
-          location_range: 500,
+          location_range: 10,
           offline_mode: false,
           analytics_opt_in: true,
           lang: 'eng',
@@ -264,7 +264,7 @@ const useAppService = () => {
      * @type    {( online: boolean )}
      * @author  Dallas Richmond
      */
-    const setOnline = (online: boolean) => {
+    const setOnline = () => {
       dispatch({ type: SET_ONLINE, payload: true });
     };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable max-len */
@@ -8,24 +9,16 @@
 import { useState } from 'react';
 import {
   Slider,
-  Toggle,
   Accordion,
-  Button,
 } from '../../components/common';
 import { SettingsRowButton } from '../../components/appNav';
 import {
   Header,
   Section,
-  Title,
-  TitleWrapper,
   StyledSelect,
   SliderWrapper,
   SettingsContainer,
   ContentContainer,
-  ModalWrapper,
-  ModalPopup,
-  AccordionButtonDiv,
-  ModalBackground,
 } from './settings.styles';
 import useAppService from '../../services/app/useAppService';
 import MoreInfoButton from '../../components/common/MoreInfoButton/MoreInfoButton';
@@ -312,7 +305,7 @@ export default function Settings() {
               <Slider
                 ariaLabel={SettingsContent.locationRange[lang]}
                 min={1}
-                max={5000}
+                max={500}
                 onChange={handleLocationRangeChange}
                 value={locationRangeValue}
               />
@@ -323,143 +316,7 @@ export default function Settings() {
           handleClick={handleLocationRangeAnalytics}
         />
         <Section>
-          <TitleWrapper>
-            <Title>{SettingsContent.offlineMode[lang]}</Title>
-            <MoreInfoButton tip={SettingsContent.offlineModeToolTip[lang]} />
-          </TitleWrapper>
-          <Toggle
-            ariaLabel={SettingsContent.offlineMode[lang]}
-            onChange={handleOfflineToggleChange}
-            value={offlineToggleValue}
-          />
-        </Section>
-        <Section>
-          <TitleWrapper>
-            <Title>{SettingsContent.analytics[lang]}</Title>
-            <MoreInfoButton tip={SettingsContent.analyticsToolTip[lang]} />
-          </TitleWrapper>
-          <Toggle
-            ariaLabel={SettingsContent.analytics[lang]}
-            onChange={handleAnalyticsToggleChange}
-            value={analyticsToggleValue}
-          />
-        </Section>
-        <Accordion
-          content={(
-            <div>
-              <AccordionButtonDiv>
-                <Button
-                  handleClick={handleRefresh}
-                  variant="primary"
-                  size="sm"
-                  disabled={!onlineCheck}
-                  text={!onlineCheck ? SettingsContent.refreshDataButtonTextOffline[lang] : SettingsContent.refreshDataButtonTextRefresh[lang]}
-                />
-                {refreshDataComplete && (
-                  <>
-                  <ModalBackground />
-                  <ModalWrapper>
-                    <p>{SettingsContent.refreshDataTextConfirm[lang]}</p>
-                    <ModalPopup>
-                      <Button
-                        handleClick={handleCacheModalCancel}
-                        variant="primary"
-                        size="sm"
-                        text={SettingsContent.refreshDataModalButton[lang]}
-                        disabled={false}
-                      />
-                    </ModalPopup>
-                  </ModalWrapper>
-                  </>
-                )}
-              </AccordionButtonDiv>
-            </div>
-          )}
-          text={SettingsContent.refreshData[lang]}
-          tooltip={<MoreInfoButton tip={SettingsContent.refreshDataToolTip[lang]} />}
-        />
-        <Accordion
-          content={(
-            <div>
-              <AccordionButtonDiv>
-                {state.mapsCached ? (
-                  <Button
-                    handleClick={handleClearCacheConfirm}
-                    variant="secondary"
-                    size="sm"
-                    disabled={!state.mapsCached}
-                    text={SettingsContent.clearCache[lang]}
-                  />
-                ) : (
-                  <Button
-                    handleClick={handleInstallMapTilesConfirm}
-                    variant="primary"
-                    size="sm"
-                    disabled={!onlineCheck}
-                    text={!onlineCheck ? SettingsContent.installMapTilesButtonTextOffline[lang] : SettingsContent.installMapTilesButtonTextOnline[lang]}
-                  />
-                )}
-                {isClearCacheModalOpen && (
-                  <>
-                    <ModalWrapper>
-                      <p>{SettingsContent.clearCacheConfirmText[lang]}</p>
-                      <ModalPopup>
-                        <Button
-                          handleClick={handleCacheModalConfirm}
-                          variant="secondary"
-                          size="sm"
-                          text={SettingsContent.clearCacheButtonConfirm[lang]}
-                          disabled={false}
-                        />
-                        <Button
-                          handleClick={handleCacheModalCancel}
-                          variant="primary"
-                          size="sm"
-                          text={SettingsContent.clearCacheButtonCancel[lang]}
-                          disabled={false}
-                        />
-                      </ModalPopup>
-                    </ModalWrapper>
-                  <ModalBackground />
-                  </>
-                )}
-                {isInstallMapTilesModalOpen && (
-                <ModalBackground>
-                  <ModalWrapper>
-                    <p>{SettingsContent.installMapTilesModalWarning[lang]}</p>
-                    <ModalPopup>
-                      <Button
-                        handleClick={handleInstallMapTilesModalConfirm}
-                        variant="tertiary"
-                        size="sm"
-                        text={SettingsContent.clearCacheButtonConfirm[lang]}
-                        disabled={false}
-                      />
-                      <Button
-                        handleClick={handleInstallMapTilesModalCancel}
-                        variant="primary"
-                        size="sm"
-                        text={SettingsContent.clearCacheButtonCancel[lang]}
-                        disabled={false}
-                      />
-                    </ModalPopup>
-                  </ModalWrapper>
-                </ModalBackground>
-                )}
-              </AccordionButtonDiv>
-            </div>
-          )}
-          text={SettingsContent.offlineMapTilesTitle[lang]}
-          tooltip={<MoreInfoButton tip={SettingsContent.offlineMapTilesToolTip[lang]} />}
-        />
-        <Section>
-          <SettingsRowButton path="/settings/about" text={SettingsContent.aboutContact[lang]} />
-        </Section>
-        <Section>
           <SettingsRowButton path="/eula" text={SettingsContent.license[lang]} />
-        </Section>
-        <Section>
-          <SettingsRowButton path="/settings/changelog" text={SettingsContent.changeLog[lang]} />
         </Section>
       </ContentContainer>
     </SettingsContainer>
