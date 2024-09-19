@@ -18,10 +18,10 @@ export const StyledReportOuterDiv = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10pt 0;
+    padding: 3em 0 4em 0;
     background-color: white;
     @media (min-width: ${mq.tablet}) {
-        padding: 20px;
+        
     }
 `;
 export const StyledReportContainer = styled.div`
@@ -96,6 +96,10 @@ export const StyledSelect = styled.select`
     padding: 5pt;
     background-color: #F5F5F5;
     border: 1px solid #DCDCDC;
+`;
+
+export const StyledMap = styled.div`
+    height: 300px;
 `;
 
 export const StyledInput = styled.input`

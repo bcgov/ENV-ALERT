@@ -16,6 +16,21 @@ export const ViewContainer = styled.div`
   width: 100%;
 `;
 
+export const StyledMapContainer = styled.div`
+    height: 39.5svh;
+    max-height: 70svh;
+    width: 100svw;
+    overflow: hidden;
+    @media (min-width: ${mq.tablet}) {
+        height: 500pt;
+        width: 350pt;
+    }
+    @media (min-width: 1000px) {
+        height: 500pt;
+        width: 500pt;
+    }
+`;
+
 export const ContentContainer = styled.div`
   display: flex;
   padding: 50pt 0pt;

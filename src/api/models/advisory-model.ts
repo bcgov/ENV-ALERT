@@ -28,7 +28,7 @@ const AdvisorySchema = new mongoose.Schema({
   details: {
     type: String,
     required: true,
-    minLength: 10,
+    minLength: 1,
     maxLength: 256,
     trim: true,
   },

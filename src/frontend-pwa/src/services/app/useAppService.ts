@@ -265,7 +265,7 @@ const useAppService = () => {
      * @author  Dallas Richmond
      */
     const setOnline = (online: boolean) => {
-      dispatch({ type: SET_ONLINE, payload: online });
+      dispatch({ type: SET_ONLINE, payload: true });
     };
 
     /**

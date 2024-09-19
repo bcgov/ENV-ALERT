@@ -21,6 +21,7 @@ export type ButtonProps = {
   size: ButtonSizes,
   disabled: boolean;
   text: string;
+  type?: string
 }
 
 export function Button({
@@ -29,6 +30,7 @@ export function Button({
   size = 'md',
   disabled = false,
   text,
+  type,
 }: ButtonProps) {
   return (
     <StyledButton
@@ -37,6 +39,7 @@ export function Button({
       size={size}
       disabled={disabled}
       value=""
+      type={type}
     >
       {text}
     </StyledButton>
@@ -45,4 +48,5 @@ export function Button({
 
 Button.defaultProps = {
   handleClick: () => {}, // Provide a default empty function
+  type: 'button'
 };
