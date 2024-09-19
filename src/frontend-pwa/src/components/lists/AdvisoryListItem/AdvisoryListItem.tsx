@@ -17,6 +17,7 @@ export default function AdvisoryListItem({
   itemData,
   locationDistance,
 }: ListItemProps) {
+  const date = itemData?.submissionTime ? itemData.submissionTime.toString() : '';
   return (
     <TableRow>
       <TableData>
@@ -24,6 +25,9 @@ export default function AdvisoryListItem({
       </TableData>
       <TableData>
         <TableDataWrapper>{itemData.details}</TableDataWrapper>
+      </TableData>
+      <TableData>
+        <TableDataWrapper>{date}</TableDataWrapper>
       </TableData>
       <TableData>
         <TableDataWrapper>{`${locationDistance} KM`}</TableDataWrapper>

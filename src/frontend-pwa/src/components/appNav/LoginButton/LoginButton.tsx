@@ -3,7 +3,6 @@
  * @summary Reusable back button navigation component
  */
 import { useSSO } from '@bcgov/citz-imb-sso-react';
-// import useAppService from '../../../services/app/useAppService';
 import {
   StyledLoginButton,
 } from './loginButton.styles';
@@ -14,20 +13,6 @@ export default function LoginButton() {
     login,
     logout,
   } = useSSO();
-  // const {
-  //   setAuthentication,
-  //   state,
-  // } = useAppService();
-  //   state.isAuthenticated ? (
-  //     <StyledLoginButton onClick={() => setAuthentication(false)}>
-  //       LOGOUT
-  //     </StyledLoginButton>
-  //   ) : (
-  //     <StyledLoginButton onClick={() => setAuthentication(true)}>
-  //       LOGIN
-  //     </StyledLoginButton>
-  //   )
-  // );
   return (
     isAuthenticated ? (
       <StyledLoginButton onClick={() => logout()}>
