@@ -126,7 +126,7 @@ export default function Mapping({ locations, currentLocation, onClick }: Mapping
   const long = parseFloat(currentLocation?.long);
 
   const zoomLevel = 12;
-  const minZoomLevel = 11;
+  const minZoomLevel = 7;
   const maxZoomLevel = 17;
   const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
@@ -171,6 +171,7 @@ export default function Mapping({ locations, currentLocation, onClick }: Mapping
                 layers= 'WHSE_BASEMAPPING.FWA_LAKES_POLY'
                 format= 'image/png'
                 transparent= {true}
+                minNativeZoom={12}
                 url='https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows'/>
             </LayersControl.Overlay>
           </LayersControl>

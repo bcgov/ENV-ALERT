@@ -100,7 +100,8 @@ export default function Report() {
   };
 
   const updateLocation = (loc: LatLng) => {
-    console.log(loc);
+    setLat(loc.lat);
+    setLng(loc.lng);
   };
 
   const handleGPSLocation = () => {
@@ -113,7 +114,6 @@ export default function Report() {
         },
       );
     }
-    console.log(lat);
   };
 
   const clearFields = () => {
@@ -194,7 +194,7 @@ export default function Report() {
             </StyledSelect>
           </Section>
           <Section>
-            <StyledP>{reportContent.locationLabel[lang]}</StyledP>
+            <StyledP>{reportContent.locationLabel[lang]}  ({lat.toFixed(4)},{lng.toFixed(4)})</StyledP>
             <StyledMap>
               <Mapping
                 locations={[]}
@@ -206,9 +206,11 @@ export default function Report() {
               type="button"
               id="gpsLocation"
               aria-label="Get GPS Location"
-              onClick={handleGPSLocation}
+              handleClick={handleGPSLocation}
               text="Use My Location"
               disabled={false}
+              size='md'
+              variant='primary'
             />
           </Section>
           <Section>
