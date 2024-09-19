@@ -25,7 +25,6 @@ import {
   Popup,
   LayersControl,
   useMapEvents,
-  useMap,
 } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
 import baseIconImage from '/marker-icon.png';
@@ -34,10 +33,9 @@ import redIconImage from '/marker-icon-red.png';
 import redIconImageMobile from '/marker-icon-2x-red.png';
 import { WMSTileLayer } from 'react-leaflet/WMSTileLayer'
 import {
-  MapWrapperDiv,
   StyledPopup,
-  StyledMapContainer,
-  PopupInfo
+  PopupInfo,
+  MapWrapperContainer
 } from './mapping.styles';
 import SingleLocation from '../../../Type/SingleLocation';
 import LocationsArray from '../../../Type/LocationsArray';
@@ -141,9 +139,7 @@ export default function Mapping({ locations, currentLocation, onClick }: Mapping
   }, [currentLocation])
   
   return (
-    <MapWrapperDiv>
-      <MapWrapperDiv>
-        <StyledMapContainer
+        <MapWrapperContainer
           center={isNaN(lat) ? [53.7267, -127.6476] : [lat, long]}
           zoom={zoomLevel}
           minZoom={minZoomLevel}
@@ -225,8 +221,6 @@ export default function Mapping({ locations, currentLocation, onClick }: Mapping
               </StyledPopup>
             </Marker>
           ))}
-        </StyledMapContainer>
-      </MapWrapperDiv>
-    </MapWrapperDiv>
+        </MapWrapperContainer>
   );
 }

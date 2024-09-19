@@ -98,6 +98,10 @@ export const StyledSelect = styled.select`
     border: 1px solid #DCDCDC;
 `;
 
+export const StyledMap = styled.div`
+    height: 300px;
+`;
+
 export const StyledInput = styled.input`
     width: 100%;
     border-radius: 0.4em;
