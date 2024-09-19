@@ -120,6 +120,8 @@ function getIconFromType ( type: string) {
       return Icons.waterAdvisoryIcon;
     case 'Swimming':
       return Icons.swimmingAdvisoryIcon;
+    default:
+      return Icons.baseIcon;
   }
 }
 
@@ -177,7 +179,7 @@ export default function Mapping({
             layers="WHSE_BASEMAPPING.FWA_LAKES_POLY"
             format="image/png"
             transparent
-            minNativeZoom={12}
+            //minNativeZoom={12}
             url="https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows"
           />
         </LayersControl.Overlay>
@@ -191,6 +193,11 @@ export default function Mapping({
             <PopupInfo>
               {item.details}
             </PopupInfo>
+            { item.expirationTime &&
+              <PopupInfo>
+                {item.expirationTime.toString()}
+              </PopupInfo>
+            }
           </StyledPopup>
         </Marker>
       ))}
