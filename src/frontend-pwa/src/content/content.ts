@@ -359,12 +359,8 @@ export const reportContent: ContentMap = {
     fr: 'Plage de dates:',
   },
   dateLabel: {
-    eng: 'Date:',
+    eng: 'Expiration Date:',
     fr: 'Date:',
-  },
-  locationLabel: {
-    eng: 'Location:',
-    fr: 'Emplacement:',
   },
   eventTypeLabel: {
     eng: 'Event type:',

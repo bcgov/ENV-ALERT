@@ -130,16 +130,15 @@ export default function Report() {
    */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if(checkFormValidity()){
+    if (checkFormValidity()) {
       const currentTime = new Date();
       const formData = {
-        lat,
-        lng,
-        submissionTime,
+        latitude: lat,
+        longitude: lng,
+        submissionTime: currentTime,
         expirationTime,
         eventType,
         details,
-        time: currentTime,
       };
 
       await axios.post(`${constants.BACKEND_URL}/api/report`, formData)
@@ -217,6 +216,8 @@ export default function Report() {
           <Section>
             <StyledTextAreaWrapper>
               {eventType === 'Animal Sighting' ? (
+                <Section />
+              ) : (
                 <Section>
                   <StyledTextAreaWrapper>
                     <StyledP>{reportContent.dateLabel[lang]}</StyledP>
@@ -225,21 +226,6 @@ export default function Report() {
                       onChange={(date) => setSubmissionTime(date || '')}
                       dateFormat="yyyy/MM/dd"
                       minDate={new Date()} // Optional: Set minimum date
-                      inline
-                    />
-                  </StyledTextAreaWrapper>
-                </Section>
-              ) : (
-                <Section>
-                  <StyledTextAreaWrapper>
-                    <StyledP>{reportContent.dateRangeLabel[lang]}</StyledP>
-                    <DatePicker
-                      selected={submissionTime ? new Date(submissionTime) : null}
-                      onChange={handleDateChange}
-                      selectsRange
-                      startDate={submissionTime ? new Date(submissionTime) : undefined}
-                      endDate={expirationTime ? new Date(expirationTime) : undefined}
-                      dateFormat="yyyy/MM/dd"
                       inline
                     />
                   </StyledTextAreaWrapper>
