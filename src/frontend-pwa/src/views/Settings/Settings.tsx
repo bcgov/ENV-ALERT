@@ -305,7 +305,7 @@ export default function Settings() {
               <Slider
                 ariaLabel={SettingsContent.locationRange[lang]}
                 min={1}
-                max={5000}
+                max={500}
                 onChange={handleLocationRangeChange}
                 value={locationRangeValue}
               />
