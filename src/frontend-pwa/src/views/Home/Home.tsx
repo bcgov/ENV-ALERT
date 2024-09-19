@@ -4,7 +4,7 @@
  */
 import { useSSO } from '@bcgov/citz-imb-sso-react';
 import { NavButton } from '../../components/appNav';
-import Location from '../Location/Location';
+import Advisory from '../Advisory/Advisory';
 import {
   Wrapper,
   ButtonWrapper,
@@ -29,7 +29,7 @@ export default function Home() {
               <Greeting />
               <ButtonWrapper>
                 <NavButton
-                  path="/location"
+                  path="/advisories"
                   text={homeContent.findService[lang]}
                   icon={location}
                   hex="#C8E1F8"
@@ -45,7 +45,7 @@ export default function Home() {
               </ButtonWrapper>
             </>
           )
-          : <Location /> }
+          : <Advisory /> }
       </Wrapper>
     </ViewContainer>
   );

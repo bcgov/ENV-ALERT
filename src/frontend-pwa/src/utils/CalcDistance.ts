@@ -3,12 +3,12 @@
  * device's current location to a service location
  * @param itemData - is the data passed in to be displayed in each list item
  * @returns {string} - is the calculated distance in KM as a string
- * @type {(itemData : SingleLocation) => string}
+ * @type {(itemData : Advisory) => string}
  * @author Dallas Richmond
  */
 
 /* eslint-disable max-len */
-import SingleLocation from '../Type/SingleLocation';
+import Advisory from '../Type/Advisory';
 
 type CurrentLocationProps = {
   lat: string;
@@ -16,7 +16,7 @@ type CurrentLocationProps = {
 }
 
 export type CalcDistanceProps = {
-  itemData: SingleLocation;
+  itemData: Advisory;
   currentLocation: CurrentLocationProps;
 }
 
