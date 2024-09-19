@@ -34,6 +34,8 @@ import { mappingContent } from '../../../content/content';
 import useAppService from '../../../services/app/useAppService';
 import FeatureResponse from '../../../Type/FeatureResponse';
 import { Icons } from './Icons';
+import AdvisoryArray from '../../../Type/AdvisoryArray';
+import Advisory from '../../../Type/Advisory';
 
 type CurrentLocationType = {
   lat: string;
@@ -41,7 +43,7 @@ type CurrentLocationType = {
 };
 
 type MappingProps = {
-  locations: LocationsArray;
+  advisories: AdvisoryArray;
   currentLocation: CurrentLocationType;
   onClick?: (latLng: Leaflet.LatLng) => void;
   // eslint-disable-next-line react/require-default-props
@@ -110,8 +112,19 @@ Mapping.defaultProps = {
   mode: 'viewer',
 };
 
+function getIconFromType ( type: string) {
+  switch (type) {
+    case 'Animal Sighting':
+      return Icons.animalSightingIcon;
+    case 'Drinking Water':
+      return Icons.waterAdvisoryIcon;
+    case 'Swimming':
+      return Icons.swimmingAdvisoryIcon;
+  }
+}
+
 export default function Mapping({
-  locations, currentLocation, onClick, mode,
+  advisories, currentLocation, onClick, mode,
 }: MappingProps) {
   const { state } = useAppService();
   const { lang } = state.settings;
@@ -194,29 +207,14 @@ export default function Mapping({
         </Marker>
       )}
 
-      {locations.map((item: SingleLocation, index: number) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Marker icon={Icons.baseIcon} key={index} position={[item.latitude, item.longitude]}>
+      {advisories.map((item: Advisory, index: number) => (
+        // eslint-disable-next-line react/no-array-index-key, max-len
+        <Marker icon={getIconFromType(item.eventType)} key={index} position={[item.latitude, item.longitude]}>
           <StyledPopup>
-            <h3>{item.locale}</h3>
+            <h3>{item.eventType}</h3>
             <PopupInfo>
-              {mappingContent.type[lang]}
-              {item.serviceType[0].toUpperCase()
-                + item.serviceType.substring(1, item.serviceType.length)}
+              {item.details}
             </PopupInfo>
-            <PopupInfo>
-              {mappingContent.address[lang]}
-              {item.address.label}
-            </PopupInfo>
-            <PopupInfo>
-              {mappingContent.phone[lang]}
-              <Link to={`tel:+${item.contact?.phone?.replaceAll('-', '').replaceAll(' ', '')}`}>
-                {item.contact?.phone}
-              </Link>
-            </PopupInfo>
-            <Link to={`/location/${item.serviceType}/${item.locale}`}>
-              <Button text="More Info" variant="primary" size="sm" disabled={false} />
-            </Link>
           </StyledPopup>
         </Marker>
       ))}
