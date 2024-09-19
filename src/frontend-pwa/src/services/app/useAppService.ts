@@ -161,7 +161,7 @@ const useAppService = () => {
         );
       } else {
         const settings = {
-          location_range: 500,
+          location_range: 10,
           offline_mode: false,
           analytics_opt_in: true,
           lang: 'eng',

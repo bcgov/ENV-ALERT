@@ -280,11 +280,13 @@ export const homeContent: ContentMap = {
 export const locationContent: ContentMap = {
   headers: {
     eng: [
-      'Locations',
+      'Advisory Type',
+      'Details',
       'Distance',
     ],
     fr: [
-      'Emplacements',
+      'Type de conseil',
+      'Détails',
       'Distance',
     ],
   },
@@ -410,7 +412,7 @@ export const footerContent: ContentMap = {
     fr: 'Accueil',
   },
   offices: {
-    eng: 'Offices',
+    eng: 'Advisories',
     fr: 'Bureaux',
   },
   services: {

@@ -23,6 +23,9 @@ export default function AdvisoryListItem({
         <TableDataWrapper>{itemData.eventType}</TableDataWrapper>
       </TableData>
       <TableData>
+        <TableDataWrapper>{itemData.details}</TableDataWrapper>
+      </TableData>
+      <TableData>
         <TableDataWrapper>{`${locationDistance} KM`}</TableDataWrapper>
       </TableData>
     </TableRow>
