@@ -11,24 +11,10 @@ import {
 } from 'react-leaflet';
 import mq from '../../../constants/mq';
 
-export const MapWrapperDiv = styled.div`
+export const MapWrapperContainer = styled(MapContainer)`
     ${typography.toString()}
-`;
-
-export const StyledMapContainer = styled(MapContainer)`
-    ${typography.toString()}
-    height: 39.5svh;
-    max-height: 70svh;
-    width: 100svw;
-    overflow: hidden;
-    @media (min-width: ${mq.tablet}) {
-        height: 500pt;
-        width: 350pt;
-    }
-    @media (min-width: 1000px) {
-        height: 500pt;
-        width: 500pt;
-    }
+    height: 100%;
+    width: 100%;
 `;
 
 export const StyledPopup = styled(Popup)`

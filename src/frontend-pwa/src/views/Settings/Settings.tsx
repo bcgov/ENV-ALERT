@@ -212,6 +212,7 @@ export default function Settings() {
    * @author  Dallas Richmond, Tyler Maloney
    */
   const handleInstallMapTilesModalConfirm = () => {
+    /*
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         registrations.forEach((registration) => {
@@ -228,6 +229,7 @@ export default function Settings() {
         });
     }
     setIsInstallMapTilesModalOpen(false);
+    */
   };
 
   /**
