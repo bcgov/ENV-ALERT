@@ -28,10 +28,7 @@ import {
   Tooltip,
 } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
-import baseIconImage from '/marker-icon.png';
-import baseIconImageMobile from '/marker-icon-2x.png';
-import redIconImage from '/marker-icon-red.png';
-import redIconImageMobile from '/marker-icon-2x-red.png';
+
 import { WMSTileLayer } from 'react-leaflet/WMSTileLayer'
 import {
   StyledPopup,
@@ -45,6 +42,7 @@ import { mappingContent } from '../../../content/content';
 import useAppService from '../../../services/app/useAppService';
 import { useEffect, useState } from 'react';
 import FeatureResponse from '../../../Type/FeatureResponse';
+import { Icons } from './Icons';
 
 type CurrentLocationType = {
   lat: string;
@@ -196,7 +194,7 @@ export default function Mapping({ locations, currentLocation, onClick, mode }: M
           {!isNaN(lat)
           && (
               <Marker 
-                icon={redIcon}
+                icon={Icons.redIcon}
                 position={[lat, long]}
                 eventHandlers={{
                   click: (e) => {
@@ -219,7 +217,7 @@ export default function Mapping({ locations, currentLocation, onClick, mode }: M
 
           {locations.map((item: SingleLocation, index: number) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Marker icon={baseIcon} key={index} position={[item.latitude, item.longitude]}>
+            <Marker icon={Icons.baseIcon} key={index} position={[item.latitude, item.longitude]}>
               <StyledPopup>
                 <h3>{item.locale}</h3>
                 <PopupInfo>
