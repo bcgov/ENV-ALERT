@@ -183,6 +183,18 @@ export default function Mapping({
         </LayersControl.Overlay>
       </LayersControl>
 
+      {advisories.map((item: Advisory, index: number) => (
+        // eslint-disable-next-line react/no-array-index-key, max-len
+        <Marker icon={getIconFromType(item.eventType)} key={index} position={[item.latitude, item.longitude]}>
+          <StyledPopup>
+            <h3>{item.eventType}</h3>
+            <PopupInfo>
+              {item.details}
+            </PopupInfo>
+          </StyledPopup>
+        </Marker>
+      ))}
+
       {!isNaN(lat) && (
         <Marker
           icon={Icons.redIcon}
@@ -207,17 +219,6 @@ export default function Mapping({
         </Marker>
       )}
 
-      {advisories.map((item: Advisory, index: number) => (
-        // eslint-disable-next-line react/no-array-index-key, max-len
-        <Marker icon={getIconFromType(item.eventType)} key={index} position={[item.latitude, item.longitude]}>
-          <StyledPopup>
-            <h3>{item.eventType}</h3>
-            <PopupInfo>
-              {item.details}
-            </PopupInfo>
-          </StyledPopup>
-        </Marker>
-      ))}
     </MapWrapperContainer>
   );
 }
