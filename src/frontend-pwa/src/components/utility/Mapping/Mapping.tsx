@@ -192,7 +192,16 @@ export default function Mapping({
           <StyledPopup>
             <h3>{item.eventType}</h3>
             <PopupInfo>{item.details}</PopupInfo>
-            {item.expirationTime && <PopupInfo>{item.expirationTime.toString()}</PopupInfo>}
+            { item.eventType !="Animal Sighting" && item.expirationTime &&
+              <PopupInfo>
+                Expiration: {item.expirationTime.toString()}
+              </PopupInfo>
+            }
+            { item.eventType =="Animal Sighting" && item.submissionTime &&
+              <PopupInfo>
+                Spotted: {item.submissionTime.toString()}
+              </PopupInfo>
+            }
           </StyledPopup>
         </Marker>
       ))}
