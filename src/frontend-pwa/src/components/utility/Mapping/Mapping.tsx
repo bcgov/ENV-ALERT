@@ -56,23 +56,6 @@ type MappingProps = {
   mode: string; //picker or viewer
 }
 
-const baseIcon = Leaflet.icon({
-  iconUrl: baseIconImage,
-  iconRetinaUrl: baseIconImageMobile,
-  iconAnchor: [5, 55],
-  popupAnchor: [10, -44],
-  iconSize: [25, 45],
-});
-
-const redIcon = Leaflet.icon({
-  iconUrl: redIconImage,
-  iconRetinaUrl: redIconImageMobile,
-  iconAnchor: [5, 55],
-  popupAnchor: [10, -44],
-  iconSize: [25, 45],
-});
-
-
 async function checkWaterbody(event: Leaflet.LeafletMouseEvent): Promise<string> {
   const bbox = event.sourceTarget.getBounds().toBBoxString();
   const width = event.sourceTarget.getSize().x;
@@ -83,13 +66,11 @@ async function checkWaterbody(event: Leaflet.LeafletMouseEvent): Promise<string>
   const wmsGetInfoUrl = `https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.FWA_LAKES_POLY/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&query_layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&layers=WHSE_BASEMAPPING.FWA_LAKES_POLY&bbox=${bbox}&feature_count=1&height=${height}&width=${width}&info_format=application%2Fjson&srs=EPSG%3A4326&x=${x}&y=${y}`;
 
   let response = await fetch(wmsGetInfoUrl)
-  if(response){
+  if (response) {
     const data = await response.json() as FeatureResponse;
     if (data && data['features'] && data['features'].length === 1) {
       console.log(data.features[0].properties.GNIS_NAME_1);
       return data.features[0].properties.GNIS_NAME_1;
-    } else {
-      
     }
   }
   return '';
