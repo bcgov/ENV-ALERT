@@ -81,14 +81,11 @@ export default function Report() {
   const checkFormValidity = useCallback(() => {
     const isEventTypeValid = !!eventType;
     let isValid = false;
-
     if(eventType !== "Animal Sighting"){
       isValid = isEventTypeValid && expirationTime != "" && validateDetailBox();
     } else {
       isValid = isEventTypeValid && validateDetailBox();
     }
-
-    console.log(eventType,expirationTime,validateDetailBox());
     return isValid;
   }, [eventType, expirationTime, validateDetailBox]);
 
@@ -140,7 +137,6 @@ export default function Report() {
    *       - Form validity is determined externally through the useEffect below.
    */
   const handleSubmit = async (e: FormEvent) => {
-    console.log('Submit', checkFormValidity());
     e.preventDefault();
     if (checkFormValidity()) {
       const currentTime = new Date();
@@ -160,8 +156,6 @@ export default function Report() {
           //setTicketNum(res.data.ticketNum);
           //setReportSending(true);
           setTimeout(() => {setReportSentSuccess(false)},4000);
-
-          console.log('Successful submit', res);
           clearFields();
         })
         .catch((err) => {

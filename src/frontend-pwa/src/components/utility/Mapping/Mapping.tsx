@@ -88,7 +88,7 @@ export function LocationMarker({ onClick, mode } : locationProps) {
   
   useMapEvents({
     click: async (ex) => {
-      let body = await checkWaterbody(ex); //TODO display Waterbody
+      let body = await checkWaterbody(ex);
       console.log(body);
       if(body != ''){
         setBody(body);
