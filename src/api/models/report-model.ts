@@ -29,7 +29,7 @@ const ReportSchema = new mongoose.Schema({
     minLength: 4,
     maxLength: 32,
     trim: true,
-    match: /^(Animal Sighting|Water Advisory|Swimming Advisory|APITest)$/i,
+    match: /^(Animal Sighting|Drinking Water Advisory|Swimming Advisory|APITest)$/i,
   },
   details: {
     type: String,
