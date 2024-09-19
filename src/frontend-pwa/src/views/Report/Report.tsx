@@ -33,14 +33,15 @@ import { localStorageKeyExists } from '../../utils/AppLocalStorage';
 import { reportContent } from '../../content/content';
 import { Mapping } from '../../components/utility';
 import { LatLng } from 'leaflet';
+import { Alert } from '@mui/material';
 
 export default function Report() {
   const charLimit = 256;
-  const minCharLimit = 10;
+  const minCharLimit = 1;
   const [eventType, setEventType] = useState('');
   const [details, setDetails] = useState('');
-  const [submissionTime, setSubmissionTime] = useState<Date | ''>('');
-  const [expirationTime, setExpirationTime] = useState<Date | ''>('');
+  const [submissionTime, setSubmissionTime] = useState(new Date());
+  const [expirationTime, setExpirationTime] = useState<Date | ''>(new Date());
   const [errorMessage, setErrorMessage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [reportSending, setReportSending] = useState(false);
@@ -79,9 +80,17 @@ export default function Report() {
    */
   const checkFormValidity = useCallback(() => {
     const isEventTypeValid = !!eventType;
-    const isValid = isEventTypeValid && submissionTime && validateDetailBox();
+    let isValid = false;
+
+    if(eventType !== "Animal Sighting"){
+      isValid = isEventTypeValid && expirationTime != "" && validateDetailBox();
+    } else {
+      isValid = isEventTypeValid && validateDetailBox();
+    }
+
+    console.log(eventType,expirationTime,validateDetailBox());
     return isValid;
-  }, [eventType, submissionTime, validateDetailBox]);
+  }, [eventType, expirationTime, validateDetailBox]);
 
   const handleEventTypeChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setEventType(e.target.value);
@@ -93,11 +102,13 @@ export default function Report() {
     }
   };
 
+  /*
   const handleDateChange = (range: [Date | null, Date | null]) => {
     const [start, end] = range;
     setSubmissionTime(start || '');
     setExpirationTime(end || '');
   };
+  */
 
   const updateLocation = (loc: LatLng) => {
     setLat(loc.lat);
@@ -118,7 +129,7 @@ export default function Report() {
 
   const clearFields = () => {
     setErrorMessage('');
-    setSubmissionTime('');
+    setSubmissionTime(new Date());
     setExpirationTime('');
     setEventType('');
     setDetails('');
@@ -129,6 +140,7 @@ export default function Report() {
    *       - Form validity is determined externally through the useEffect below.
    */
   const handleSubmit = async (e: FormEvent) => {
+    console.log('Submit', checkFormValidity());
     e.preventDefault();
     if (checkFormValidity()) {
       const currentTime = new Date();
@@ -141,14 +153,15 @@ export default function Report() {
         details,
       };
 
-      await axios.post(`${constants.BACKEND_URL}/api/report`, formData)
+      await axios.post(`${constants.BACKEND_URL}/api/advisories`, formData)
         .then((res) => {
           setReportSentSuccess(true);
           setSuccessfulReports(res.data);
-          setTicketNum(res.data.ticketNum);
-          setReportSending(true);
+          //setTicketNum(res.data.ticketNum);
+          //setReportSending(true);
+          setTimeout(() => {setReportSentSuccess(false)},4000);
 
-          console.log('successful submit');
+          console.log('Successful submit', res);
           clearFields();
         })
         .catch((err) => {
@@ -164,6 +177,12 @@ export default function Report() {
     <form onSubmit={handleSubmit}>
       <StyledReportOuterDiv>
         <StyledReportContainer>
+
+          { reportSentSuccess &&
+            <Alert className='Alert' severity="success">
+              Successfully submitted advisory!
+            </Alert>
+          }
           <HeaderContainer>
             <StyledHeaderTwo>{reportContent.reportLabel[lang]}</StyledHeaderTwo>
             <NavLink to="/report/history">
@@ -187,7 +206,7 @@ export default function Report() {
               <option value="">{reportContent.eventTypeOptionLabel[lang]}</option>
               {reportContent.reportOptions[lang].map((event: string, index: number) => (
                 <option value={reportContent.reportOptions.eng[index]} key={index}>
-                  {event}
+                  {event} Advisory
                 </option>
               ))}
             </StyledSelect>
@@ -202,9 +221,11 @@ export default function Report() {
                 mode='picker'
               />
             </StyledMap>
-            <Button
+          </Section>
+          <ButtonSection>
+          <Button
               type="button"
-              id="gpsLocation"
+              //id="gpsLocation"
               aria-label="Get GPS Location"
               handleClick={handleGPSLocation}
               text="Use My Location"
@@ -212,7 +233,7 @@ export default function Report() {
               size='md'
               variant='primary'
             />
-          </Section>
+          </ButtonSection>
           <Section>
             <StyledTextAreaWrapper>
               {eventType === 'Animal Sighting' ? (
@@ -223,7 +244,7 @@ export default function Report() {
                     <StyledP>{reportContent.dateLabel[lang]}</StyledP>
                     <DatePicker
                       selected={submissionTime ? new Date(submissionTime) : null}
-                      onChange={(date) => setSubmissionTime(date || '')}
+                      onChange={(date) => setExpirationTime(date || '')}
                       dateFormat="yyyy/MM/dd"
                       minDate={new Date()} // Optional: Set minimum date
                       inline

@@ -385,8 +385,8 @@ export const reportContent: ContentMap = {
   reportOptions: {
     eng: [
       'Animal Sighting',
-      'Drinking Water Advisory',
-      'Swimming Advisory',
+      'Drinking Water',
+      'Swimming',
     ],
     fr: [
       'Observation d\'animaux',
